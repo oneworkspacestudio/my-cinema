@@ -8,6 +8,10 @@ try{npm ci --no-audit --no-fund;if($LASTEXITCODE){throw 'Dependency install fail
 New-Item -ItemType Directory -Force (Join-Path $root $Out) | Out-Null
 Push-Location $root
 try{
+ $target=Join-Path $root "$Out/MyCinema.exe"
+ # Go may reuse an existing executable with the same build ID, including an
+ # earlier data overlay. Always build a clean launcher before appending once.
+ if(Test-Path -LiteralPath $target){Remove-Item -LiteralPath $target -Force}
  & $Go build -buildvcs=false -trimpath -ldflags "-s -w -H=windowsgui -X main.version=$Version" -o (Join-Path $Out 'MyCinema.exe') ./cmd/mycinema
  if($LASTEXITCODE){throw 'Launcher build failed'}
  $exe=[IO.File]::Open((Join-Path $root "$Out/MyCinema.exe"),[IO.FileMode]::Append)
