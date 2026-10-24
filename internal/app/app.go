@@ -22,6 +22,7 @@ type App struct {
 	status   string
 	plays    map[string]*Playback
 	attempts map[string]attempt
+	uploadMu sync.Mutex
 }
 type attempt struct {
 	Count int
@@ -40,7 +41,7 @@ func New(h *apphost.Host) (*App, error) {
 	if e := h.DB.QueryRow("SELECT coalesce(max(version),0) FROM host_migrations").Scan(&schema); e != nil {
 		return nil, e
 	}
-	if schema > 2 {
+	if schema > 4 {
 		return nil, errors.New("this media data needs a newer My Cinema release")
 	}
 	if schema < 1 {
@@ -55,6 +56,16 @@ func New(h *apphost.Host) (*App, error) {
 	}
 	if schema < 2 {
 		if e := h.Migrate(2, `CREATE TABLE saved_titles(profile TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,item TEXT NOT NULL,at TEXT NOT NULL,PRIMARY KEY(profile,item));`); e != nil {
+			return nil, e
+		}
+	}
+	if schema < 3 {
+		if e := h.Migrate(3, `CREATE TABLE media_uploads(id TEXT PRIMARY KEY,library TEXT NOT NULL,session TEXT NOT NULL,profile TEXT NOT NULL,name TEXT NOT NULL,size INTEGER NOT NULL,offset INTEGER NOT NULL DEFAULT 0,updated INTEGER NOT NULL);`); e != nil {
+			return nil, e
+		}
+	}
+	if schema < 4 {
+		if e := h.Migrate(4, `ALTER TABLE media_uploads ADD COLUMN completed INTEGER NOT NULL DEFAULT 0;`); e != nil {
 			return nil, e
 		}
 	}
@@ -81,6 +92,7 @@ func New(h *apphost.Host) (*App, error) {
 		{"GET /api/items/{id}/similar", a.similar},
 		{"POST /api/playback/sessions", a.startPlayback}, {"POST /api/playback/{id}/progress", a.progress}, {"POST /api/playback/{id}/stop", a.stopPlayback}, {"GET /api/playback/{id}/stream/{path...}", a.stream},
 		{"GET /api/admin/settings", a.settings}, {"POST /api/admin/libraries", a.addLibrary}, {"DELETE /api/admin/libraries/{id}", a.removeLibrary}, {"POST /api/admin/scan", a.scan},
+		{"POST /api/admin/uploads", a.createUpload}, {"GET /api/admin/uploads/{id}", a.uploadStatus}, {"PUT /api/admin/uploads/{id}", a.uploadChunk}, {"POST /api/admin/uploads/{id}/complete", a.completeUpload}, {"DELETE /api/admin/uploads/{id}", a.cancelUpload},
 		{"POST /api/profile/preferences", a.preferences}, {"DELETE /api/profile/history", a.clearHistory},
 	}
 	for _, r := range routes {

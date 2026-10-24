@@ -326,6 +326,7 @@ func (a *App) addLibrary(w http.ResponseWriter, r *http.Request) {
 	var in struct {
 		Name, Kind, Path string
 		Metadata         bool
+		Create           bool
 	}
 	if !apphost.Decode(w, r, &in) {
 		return
@@ -335,7 +336,24 @@ func (a *App) addLibrary(w http.ResponseWriter, r *http.Request) {
 		apphost.Problem(w, 400, "Choose a library name and type")
 		return
 	}
-	path, e := validateRoot(in.Path)
+	candidate, e := filepath.Abs(filepath.Clean(in.Path))
+	if e != nil || !filepath.IsAbs(in.Path) || filepath.Dir(candidate) == candidate || inside(candidate, a.H.Config.Data) || inside(a.H.Config.Data, candidate) {
+		apphost.Problem(w, 400, "Choose a dedicated media folder outside the private app data")
+		return
+	}
+	if in.Create {
+		if _, statErr := os.Stat(candidate); os.IsNotExist(statErr) {
+			if _, e = validateRoot(filepath.Dir(candidate)); e != nil {
+				apphost.Problem(w, 400, "Choose an existing parent folder for your new media folder")
+				return
+			}
+			if e = os.Mkdir(candidate, 0700); e != nil && !os.IsExist(e) {
+				apphost.Problem(w, 400, "The new media folder could not be created. Check its location and permissions.")
+				return
+			}
+		}
+	}
+	path, e := validateRoot(candidate)
 	if e != nil {
 		apphost.Problem(w, 400, e.Error())
 		return
@@ -367,6 +385,18 @@ func (a *App) addLibrary(w http.ResponseWriter, r *http.Request) {
 }
 func (a *App) removeLibrary(w http.ResponseWriter, r *http.Request) {
 	if !a.admin(w, r) || !a.media(w) {
+		return
+	}
+	a.uploadMu.Lock()
+	defer a.uploadMu.Unlock()
+	a.expireUploadsLocked()
+	var uploads int
+	if e := a.H.DB.QueryRow("SELECT count(*) FROM media_uploads WHERE library=? AND completed=0", r.PathValue("id")).Scan(&uploads); e != nil {
+		a.H.DBError(w, e)
+		return
+	}
+	if uploads > 0 {
+		apphost.Problem(w, 409, "Finish or cancel uploads to this folder before disconnecting it")
 		return
 	}
 	var name string
@@ -411,6 +441,9 @@ func (a *App) reconcile(ctx context.Context) {
 		case <-ctx.Done():
 			return
 		case <-tick.C:
+			a.uploadMu.Lock()
+			a.expireUploadsLocked()
+			a.uploadMu.Unlock()
 			ls, e := a.libraries()
 			if e != nil {
 				continue

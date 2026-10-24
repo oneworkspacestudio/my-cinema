@@ -32,3 +32,17 @@ test, legal certification, clean-host or arbitrary-device performance guarantee.
 Jellyfin's own local diagnostics can include filesystem paths and upstream stream
 parameters. They remain inside protected app data and are not returned through
 the user API. Review and redact logs before sharing them.
+
+Preview.3 adds owner-only video uploads behind an unlocked adult profile. Every
+chunk, completion, status and cancellation request verifies the current account,
+session and profile; writes retain Origin/CSRF enforcement. Destination IDs map
+to existing validated library roots; clients cannot supply arbitrary write paths.
+Plain filenames, Windows reserved names, container signatures, total size,
+8 MiB chunk bounds and acknowledged offsets are checked. Files stay in a named
+staging directory until complete; Windows directory publication cannot replace
+an existing title. Cancellation/expiry removes only that recorded staging job.
+Completed receipts make a lost completion response recoverable and expire without
+deleting the saved video. Go HTTP tests cover these boundaries. The separate
+upload acceptance report covers real two-chunk browser transfer, lost replies,
+byte equality, actual indexed playback, duplicate/cancel and phone layout using
+synthetic media. No existing owner library was used as a fixture.

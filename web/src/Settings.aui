@@ -16,6 +16,7 @@ Page Settings variant=settings
     If condition=$admin
       Card variant=settings-panel
         Heading level=2 "Media folders"
+        Button variant=primary action=addVideos icon=Plus "Add videos"
         Text variant=muted "Share the same folders with My Drive. Videos stay where they are."
         For each=$libraries
           Row variant=library

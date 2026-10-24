@@ -14,7 +14,7 @@ Page Catalog variant=catalog
       Heading level=2 "$emptyTitle"
       Text "$emptyText"
       If condition=$canSetup
-        Button variant=primary action=settings "Connect media folders"
+        Button variant=primary action=addVideos "Add videos"
   Grid variant=media-grid
     For each=$items
       Card variant=media

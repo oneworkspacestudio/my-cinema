@@ -1,0 +1,50 @@
+import {chromium,expect} from '@playwright/test';
+import {readFile,writeFile,mkdir,readdir} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const fixture=process.env.CINEMA_QA_ROOT||'C:/Projects/.cache/cinema-upload-20261025';
+const artifacts=process.env.CINEMA_QA_ARTIFACTS||'I:/Projects/tooling/my-cinema-20261024/upload3-evidence';
+const origin=process.env.CINEMA_QA_ORIGIN||'http://localhost:29320';
+const checks=[],errors=[];let browser;
+const check=s=>{checks.push(s);console.log('PASS',s)};
+const hash=b=>createHash('sha256').update(b).digest('hex');
+await mkdir(artifacts,{recursive:true});
+try{
+ await expect.poll(async()=>{try{return (await fetch(origin+'/cinema-health')).ok}catch{return false}},{timeout:120000}).toBe(true);
+ browser=await chromium.launch({channel:'msedge',headless:true});
+ const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(origin);
+ await page.getByRole('textbox',{name:'Email address',exact:true}).fill('upload@example.test');
+ await page.getByRole('textbox',{name:'Password',exact:true}).fill('synthetic-upload-acceptance-only');
+ await page.getByRole('button',{name:'Sign in',exact:true}).click();
+ const api=async(path,method='GET',body)=>page.evaluate(async({path,method,body})=>{const me=await(await fetch('/api/me')).json();const r=await fetch(path,{method,headers:{'Content-Type':'application/json','X-CSRF-Token':me.csrf},body:body===undefined?undefined:JSON.stringify(body)});return {status:r.status,data:await r.json()}},{path,method,body});
+ await expect.poll(async()=>(await api('/api/status')).data.ready,{timeout:120000}).toBe(true);
+ const ps=(await api('/api/profiles')).data.profiles;
+ if(!ps.length){await page.getByPlaceholder('Profile name',{exact:true}).fill('Synthetic adult');await page.getByPlaceholder('Profile PIN',{exact:true}).fill('123456');await page.getByRole('button',{name:'Create profile',exact:true}).click()}
+ await page.getByRole('button',{name:/Synthetic adult/}).click();await page.getByPlaceholder('Profile PIN',{exact:true}).fill('123456');await page.getByRole('button',{name:'Start watching',exact:true}).click();
+ await page.getByRole('button',{name:'Add videos',exact:true}).first().click();
+ await expect(page.getByRole('heading',{name:'Add videos',exact:true})).toBeVisible();
+ const libraries=(await api('/api/admin/settings')).data.libraries;
+ if(!libraries.length){await page.getByPlaceholder('Library name',{exact:true}).fill('My uploaded videos');await page.getByRole('combobox',{name:'Library type',exact:true}).selectOption('homevideos');await page.getByPlaceholder('Full folder path on the Workspace PC',{exact:true}).fill(fixture+'/videos');await page.getByRole('checkbox',{name:'Create this folder if it does not exist',exact:true}).check();await page.getByRole('button',{name:'Connect folder',exact:true}).click()}
+ await expect(page.getByRole('combobox',{name:'Save videos to',exact:true})).toBeVisible();check('Visible Add videos entry and real new destination folder creation');
+ let dropped=false;
+ let completionDropped=false;
+ await page.route('**/api/admin/uploads/*/complete',async route=>{if(!completionDropped){completionDropped=true;await route.fetch();await route.abort('failed')}else await route.continue()});
+ await page.route('**/api/admin/uploads/*?offset=*',async route=>{if(!dropped){dropped=true;await route.fetch();await route.abort('failed')}else await route.continue()});
+ await page.getByLabel('Choose videos',{exact:true}).setInputFiles(fixture+'/First Upload.mp4');await page.getByRole('button',{name:'Upload selected videos',exact:true}).click();
+ await expect(page.getByText('1 video saved. Scanning your library…',{exact:true})).toBeVisible({timeout:45000});
+ expect(dropped).toBe(true);expect(completionDropped).toBe(true);await page.unroute('**/api/admin/uploads/*?offset=*');await page.unroute('**/api/admin/uploads/*/complete');
+ const uploaded=fixture+'/videos/First Upload/First Upload.mp4';expect(hash(await readFile(uploaded))).toBe(hash(await readFile(fixture+'/First Upload.mp4')));
+ expect((await readdir(fixture+'/videos')).some(n=>n.startsWith('.cinema-upload-'))).toBe(false);
+ check('Chunked browser upload recovers lost chunk and completion replies and saves exact original bytes');
+ await expect.poll(async()=>(await api('/api/catalog')).data.items?.some(i=>i.title==='First Upload'),{timeout:120000}).toBe(true);
+ await page.screenshot({path:artifacts+'/add-videos-desktop.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:artifacts+'/add-videos-phone.png',fullPage:true});await page.setViewportSize({width:1440,height:1000});
+ await page.getByRole('button',{name:'View recently added',exact:true}).click();await page.getByRole('button',{name:'First Upload',exact:true}).click();await page.getByRole('button',{name:'Play',exact:true}).last().click();
+ await expect.poll(async()=>page.locator('video').evaluate(v=>v.currentTime),{timeout:45000}).toBeGreaterThan(.5);await page.getByRole('button',{name:'Back to browse',exact:true}).click();check('Uploaded video is indexed by real Jellyfin and actually plays in the browser; phone layout fits');
+ await page.getByRole('button',{name:'Add videos',exact:true}).first().click();await page.getByLabel('Choose videos',{exact:true}).setInputFiles(fixture+'/First Upload.mp4');await page.getByRole('button',{name:'Upload selected videos',exact:true}).click();await expect(page.getByText(/A video or folder with this name already exists/)).toBeVisible();expect(hash(await readFile(uploaded))).toBe(hash(await readFile(fixture+'/First Upload.mp4')));check('Duplicate upload reports a conflict and leaves existing video bytes unchanged');
+ await page.route('**/api/admin/uploads/*?offset=*',async route=>{await new Promise(resolve=>setTimeout(resolve,1000));await route.continue().catch(()=>{})});
+ await page.getByLabel('Choose videos',{exact:true}).setInputFiles({name:'Cancel this video.mp4',mimeType:'video/mp4',buffer:await readFile(fixture+'/First Upload.mp4')});await page.getByRole('button',{name:'Upload selected videos',exact:true}).click();await page.getByRole('button',{name:'Cancel upload',exact:true}).click();await expect(page.getByText(/Unfinished upload cancelled|Upload cancelled/)).toBeVisible();
+ await expect.poll(async()=>(await readdir(fixture+'/videos')).filter(n=>n.startsWith('.cinema-upload-')).length,{timeout:15000}).toBe(0);expect((await readdir(fixture+'/videos')).includes('Cancel this video')).toBe(false);await page.unroute('**/api/admin/uploads/*?offset=*');check('Cancel aborts transfer and removes only unfinished staging');
+ await page.getByLabel('Choose videos',{exact:true}).setInputFiles({name:'Wrong file.mp4',mimeType:'video/mp4',buffer:Buffer.from('MZ'+('not a video'.repeat(10)))});await page.getByRole('button',{name:'Upload selected videos',exact:true}).click();await expect(page.getByText(/not a supported video container/)).toBeVisible();expect((await readdir(fixture+'/videos')).includes('Wrong file')).toBe(false);expect(errors).toEqual([]);check('Renamed executable/text rejected before publication; no browser errors');
+ await writeFile(artifacts+'/acceptance.json',JSON.stringify({checks,errors,originalSyntheticMedia:true,liveOwnerDataUsed:false,cleanHost:false},null,2));
+}catch(e){await writeFile(artifacts+'/failure.txt',String(e.stack));throw e}finally{await browser?.close()}

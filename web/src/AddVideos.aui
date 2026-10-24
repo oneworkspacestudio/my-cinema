@@ -1,0 +1,49 @@
+Page AddVideos variant=settings
+  Text variant=eyebrow "GROW YOUR COLLECTION"
+  Heading level=1 "Add videos"
+  Text variant=muted "Upload from this device, or connect videos already on your Workspace PC."
+  If condition=$admin
+    Grid variant=settings
+      Card variant=settings-panel
+        Heading level=2 "Upload videos"
+        Text variant=muted "Choose a connected folder, then select videos from your computer or phone. Originals on this device stay untouched."
+        If condition=$hasLibraries
+          Select name=uploadLibrary label="Save videos to" options=$uploadLibraries disabled=$uploading
+          Text variant=path "$uploadDestination"
+          Input name=videoFiles type=file placeholder="Choose videos" accept=".mp4,.mkv,.webm,.mov,.avi,.m4v,.ts" multiple=true disabled=$uploading
+          Text variant=muted "Each video is saved in its own title folder. Existing files are never replaced. Up to 100 GB per video."
+          If condition=$selectedFiles
+            Text "$selectedFiles"
+          If condition=$uploading
+            Metric value=$uploadPercent label="Video upload progress"
+            Text "$uploadMessage"
+            Button variant=outline action=cancelUploads "Cancel upload"
+          If condition=$canUpload
+            Button variant=primary icon=Plus action=uploadVideos "Upload selected videos"
+        If condition=$noLibraries
+          Text "First connect a media folder below. This is where uploaded videos will be saved on your Workspace PC."
+        If condition=$uploadResult
+          Text variant=upload-result "$uploadResult"
+          Button variant=outline action=new "View recently added"
+      Card variant=settings-panel
+        Heading level=2 "Connect a media folder"
+        Text variant=muted "Already have videos on the Workspace PC or in My Drive? Connect their folder to index them without copying. For TV shows, keep the Series / Season / Episode folder structure."
+        Input name=libraryName placeholder="Library name"
+        Select name=libraryKind label="Library type" options=$libraryKinds
+        Input name=libraryPath placeholder="Full folder path on the Workspace PC"
+        Checkbox name=createMediaFolder label="Create this folder if it does not exist"
+        Checkbox name=lookupMetadata label="Look up titles and artwork online using media filenames"
+        Button variant=primary action=addLibrary icon=FolderPlus "Connect folder"
+        For each=$libraries
+          Row variant=library
+            Stack
+              Text "$item.name"
+              Text variant=muted "$item.kind"
+              Text variant=path "$item.path"
+        Button variant=outline action=scan icon=RefreshCw "Scan for new videos"
+    Text variant=muted "Keep this page open while uploading. Once saved, videos appear after the media scan. Uploaded originals need their own file backup."
+  If condition=$notAdmin
+    Card variant=empty
+      Heading level=2 "Ask your Workspace owner"
+      Text "Adding videos requires the Workspace owner and an unlocked adult viewing profile."
+      Button variant=primary action=profiles "Choose a viewing profile"

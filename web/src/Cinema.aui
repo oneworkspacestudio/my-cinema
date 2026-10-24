@@ -8,6 +8,8 @@ Page Cinema
       Button action=new "New & Added"
       Button action=list "My List"
     Spacer
+    If condition=$canAddVideos
+      Button variant=add-videos icon=Plus label="Add videos" action=addVideos "Add videos"
     Button icon=Search label="Search" action=search
     Button icon=AppWindow label="Apps" action=apps
     Button icon=Settings label="Settings" action=settings
@@ -29,6 +31,8 @@ Page Cinema
     Section id=search
   If condition=$settings
     Section id=settings
+  If condition=$addVideos
+    Section id=addVideos
   If condition=$detail
     Section id=detail
   If condition=$player

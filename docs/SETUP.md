@@ -7,9 +7,28 @@ sign-in. Create your first adult viewing profile and choose a 4–12 digit PIN.
 Adult profiles always require the PIN when selected. Each household can have six
 profiles. A Kids profile can only be created or changed after unlocking an adult.
 
-The Workspace owner can add libraries in Settings. Give each folder a name, choose
-Movies, TV Shows or Home videos, and enter its full path on this PC. Use the same
-real directories that My Drive already exposes. No copying or moving is performed.
+The Workspace owner can choose **Add videos** in the header after unlocking an
+adult viewing profile. First connect a destination folder: give it a name, choose
+Movies, TV Shows or Home videos, and enter its full path on the Workspace PC.
+Select **Create this folder if it does not exist** to create a new folder inside
+an existing parent. Paths refer to the PC running Workspace, including when you
+use Cinema from a phone or another computer.
+
+To upload, choose a connected folder, select videos from your device and press
+**Upload selected videos**. Keep Cinema open until it reports the videos saved.
+The page shows progress and provides Cancel upload. Videos transfer in small
+chunks with acknowledged offsets, allowing a lost request to be retried. Each
+completed video is saved in its own title folder. Existing files/folders are
+never overwritten; rename a duplicate upload instead. Cancelling removes only
+the unfinished upload and keeps videos already completed. Interrupted staging
+files stay hidden from playback and expire after 24 hours when their library is
+available. Uploads support MP4, MKV, WebM, MOV, AVI, M4V and TS, up to 100 GB each.
+
+For videos already on this PC or in My Drive, connect the same real directories
+that My Drive exposes. Connecting a folder only indexes it; no copying or moving
+is performed. TV libraries should use Series / Season / Episode structure; connect
+an existing structured folder for a complete series. Uploaded originals on your
+device are retained, and originals saved on the Workspace PC need a file backup.
 Directories cannot traverse links or junctions or point into Cinema's private data.
 
 For example: D:\Media\Movies and D:\Media\TV Shows. UNC shares require the current
@@ -20,6 +39,9 @@ artwork lookup is an explicit library option; enabling it can send media filenam
 to configured metadata providers. Missing artwork has an original visual fallback.
 The watcher is supplemented by 45-second stable-file reconciliation. Scanning does
 not block browsing. Removing a library removes configuration and keeps every file.
+
+Use **Scan for new videos** after copying more files into a connected folder, or
+wait for automatic discovery. New uploads also trigger a media scan.
 
 Use title details to resume/restart, mark watched, choose audio/subtitles or switch
 versions. Native player controls provide volume, pause, seeking and captions;
