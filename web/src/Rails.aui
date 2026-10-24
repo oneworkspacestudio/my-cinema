@@ -1,0 +1,23 @@
+Stack variant=rails
+  For each=$rows
+    Section variant=rail
+      Row variant=rail-heading
+        Heading level=2 "$item.name"
+        Spacer
+        Button icon=ChevronLeft label="Previous titles" item=$item.id action=railLeft
+        Button icon=ChevronRight label="Next titles" item=$item.id action=railRight
+        Button variant=text item=$item.id action=showAll "Show all"
+      Row variant=rail id=$item.id
+        For each=$item.items
+          Card variant=media
+            Button variant=art item=$item.id action=detail label=$item.title
+              Image src=$item.poster alt=$item.title
+              Text variant=art-label "$item.title"
+              If condition=$item.hasProgress
+                Metric variant=progress value=$item.percent
+            Row variant=card-title
+              Text "$item.title"
+              Spacer
+              Button icon=Play label="Play title" item=$item.id action=play
+              Button icon=$item.listIcon label=$item.listLabel item=$item.id action=favourite
+            Text variant=card-meta "$item.meta"

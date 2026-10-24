@@ -1,0 +1,8 @@
+{
+  "realSRTtoWebVTT": true,
+  "selectedAudioAndSubtitleNegotiated": true,
+  "selectedCaptionsActuallyShowingInVideo": true,
+  "oldStreamDeniedAfterProfileSwitch": true,
+  "adultPINRateLimitFiveFailures": true,
+  "liveOwnerFixture": false
+}

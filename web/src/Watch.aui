@@ -1,0 +1,24 @@
+Page Watch variant=watch
+  Row variant=watch-header
+    Button variant=glass icon=ArrowLeft action=exitPlayer "Back to browse"
+    Spacer
+    Text "$title"
+  Section id=video
+  Row variant=watch-tools
+    Select name=quality label="Video quality" options=$qualities
+    Select name=playAudio label="Audio" options=$audioTracks
+    Select name=playSubtitle label="Subtitles" options=$subtitleTracks
+    Select name=speed label="Playback speed" options=$speeds
+    Button icon=RotateCcw action=seekBack "Back 10s"
+    Button icon=FastForward action=seekForward "Forward 10s"
+    Button icon=Maximize action=fullscreen "Fullscreen"
+  Text variant=muted "$playbackInfo"
+  If condition=$hasError
+    Button variant=outline icon=RefreshCw action=retryPlayback "Retry playback"
+  If condition=$hasNext
+    Card variant=up-next
+      Text "$nextText"
+      Row
+        Button variant=light icon=Play action=nextEpisode "Play next episode"
+        If condition=$countdown
+          Button variant=outline action=cancelNext "Cancel auto-play"

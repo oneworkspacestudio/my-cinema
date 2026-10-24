@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "id": "cinema",
+  "name": "My Cinema",
+  "version": "0.1.0-preview.1",
+  "route": "/cinema",
+  "workspaceInstallerIntegration": 3,
+  "os": "windows",
+  "arch": "amd64",
+  "jellyfin": "12.3",
+  "jellyfinApi": "12.3.0",
+  "ffmpeg": "8.1.3-1",
+  "oidc": "native-code-pkce",
+  "filesystem": "shared-roots",
+  "secrets": "windows-dpapi",
+  "runtimeArchiveSHA256": "64b81a7b01b4dfb4ad3380a367cdeaf59878d9070c0d5e0cf84025e58ed3e853",
+  "runtimePackaging": "verified-pe-overlay"
+}

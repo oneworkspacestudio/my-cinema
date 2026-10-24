@@ -1,0 +1,13 @@
+Page Login variant=login
+  Text variant=eyebrow "WELCOME TO YOUR PRIVATE SCREENING"
+  Heading level=1 "Great stories.\nYour space."
+  Text variant=synopsis "Your films, your series, your people. Settle into a cinema that belongs to you."
+  If condition=$oidc
+    Link variant=primary href=$loginURL "Continue with OneAccount"
+  If condition=$local
+    Card variant=form
+      Heading level=2 "$title"
+      Text variant=muted "Standalone local account — this is not OneAccount sign-in."
+      Input name=email placeholder="Email address" type=email
+      Input name=password placeholder="Password" type=password
+      Button variant=primary action=login "$button"

@@ -1,0 +1,7 @@
+dist/
+web/node_modules/
+web/src/generated/
+internal/webui/dist/*
+!internal/webui/dist/.gitkeep
+data/
+*.log

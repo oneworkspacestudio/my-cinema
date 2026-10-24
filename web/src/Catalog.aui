@@ -1,0 +1,33 @@
+Page Catalog variant=catalog
+  Row variant=page-heading
+    Stack
+      Text variant=eyebrow "CURATED BY YOU"
+      Heading level=1 "$title"
+      Text variant=muted "$subtitle"
+    Spacer
+    Select name=sort label="Sort titles" options=$sorts
+  If condition=$searching
+    Input name=query type=search placeholder="Titles, people, genres…" autoFocus=true
+  If condition=$empty
+    Card variant=empty
+      Icon name=Film size=52
+      Heading level=2 "$emptyTitle"
+      Text "$emptyText"
+      If condition=$canSetup
+        Button variant=primary action=settings "Connect media folders"
+  Grid variant=media-grid
+    For each=$items
+      Card variant=media
+        Button variant=art item=$item.id action=detail label=$item.title
+          Image src=$item.poster alt=$item.title
+          Text variant=art-label "$item.title"
+          If condition=$item.hasProgress
+            Metric variant=progress value=$item.percent
+        Row variant=card-title
+          Text "$item.title"
+          Spacer
+          Button icon=Play label="Play title" item=$item.id action=play
+          Button icon=$item.listIcon label=$item.listLabel item=$item.id action=favourite
+        Text variant=card-meta "$item.meta"
+  If condition=$more
+    Button variant=outline action=loadMore "Load more titles"

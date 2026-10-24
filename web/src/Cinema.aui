@@ -1,0 +1,38 @@
+Page Cinema
+  Row variant=nav
+    Link href="#browse" variant=brand "MY CINEMA"
+    Row variant=links
+      Button action=home "Home"
+      Button action=series "TV Shows"
+      Button action=movies "Movies"
+      Button action=new "New & Added"
+      Button action=list "My List"
+    Spacer
+    Button icon=Search label="Search" action=search
+    Button icon=AppWindow label="Apps" action=apps
+    Button icon=Settings label="Settings" action=settings
+    Button icon=Users label="Switch profile" action=profiles
+  If condition=$error
+    Alert tone=error "$error"
+  If condition=$loading
+    Section id=loading
+  If condition=$login
+    Section id=login
+  If condition=$profiles
+    Section id=profiles
+  If condition=$browse
+    Section id=hero
+    Section id=rails
+  If condition=$catalog
+    Section id=catalog
+  If condition=$search
+    Section id=search
+  If condition=$settings
+    Section id=settings
+  If condition=$detail
+    Section id=detail
+  If condition=$player
+    Section id=player
+  Row variant=footer
+    Text "Your collection. Your cinema."
+    Text "MY CINEMA · ONE WORKSPACE"

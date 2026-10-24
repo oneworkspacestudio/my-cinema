@@ -1,0 +1,46 @@
+Card variant=modal label=$title
+  Button variant=close icon=X label="Close details" action=closeDetail
+  Card variant=detail-art image=$backdrop
+    Text variant=eyebrow "MY CINEMA ORIGINAL EXPERIENCE"
+    Heading level=1 "$title"
+  Stack variant=detail-body
+    Row variant=actions
+      Button variant=light icon=Play item=$id action=play "$playLabel"
+      Button variant=outline icon=RotateCcw item=$id action=restart "Restart"
+      Button variant=outline icon=$listIcon item=$id action=favourite "$listLabel"
+      Button variant=outline icon=Check item=$id action=watched "$watchedLabel"
+    Row variant=metadata
+      Badge "$rating"
+      Text "$yearLabel"
+      Text "$durationLabel"
+      Text "$genreLabel"
+    Text variant=synopsis "$overview"
+    Text variant=muted "$cast"
+    If condition=$hasSources
+      Row variant=tracks
+        Select name=version label="Video version" options=$versions
+        Select name=audio label="Audio track" options=$audioTracks
+        Select name=subtitle label="Subtitle track" options=$subtitleTracks
+    If condition=$series
+      Row
+        Heading level=2 "Episodes"
+        Spacer
+        Select name=season label="Season" options=$seasons
+      Stack variant=episodes
+        For each=$episodes
+          Button variant=episode item=$item.id action=play
+            Image src=$item.poster alt=$item.title
+            Stack
+              Text variant=episode-title "$item.episodeLabel"
+              Text variant=muted "$item.durationLabel"
+              Text "$item.overview"
+              If condition=$item.hasProgress
+                Metric variant=progress value=$item.percent
+    If condition=$hasSimilar
+      Heading level=2 "More like this"
+      Grid variant=media-grid
+        For each=$similar
+          Card variant=media
+            Button variant=art item=$item.id action=detail label=$item.title
+              Image src=$item.poster alt=$item.title
+              Text variant=art-label "$item.title"

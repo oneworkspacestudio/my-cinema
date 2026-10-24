@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "Full native installer creates a fresh selected Accounts/Drive/Cinema installation with synthetic protected NTFS data",
+    "Actual MyAccounts code/PKCE owner sign-in and single EXE verified runtime extraction initialize the private engine",
+    "Owner UI configures a shared physical media folder and obtains real profile-authorized video bytes",
+    "Authenticated Quantum My Drive reads the same physical video folder, with no duplicate media store",
+    "Embedded proxy subpath, native Apps picker and phone layout work after real OIDC",
+    "Independent browser sessions require their own PIN and reopen the same server-authoritative household",
+    "Different real MyAccounts subject cannot read another household or self-grant library access"
+  ],
+  "errors": [],
+  "liveOwnerDataUsed": false,
+  "realOIDC": true,
+  "engineRuntimeExtractedFromEXE": true,
+  "cleanHost": false
+}

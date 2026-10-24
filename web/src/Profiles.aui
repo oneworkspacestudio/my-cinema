@@ -1,0 +1,26 @@
+Page Profiles variant=profiles
+  Text variant=eyebrow "MAKE YOURSELF AT HOME"
+  Heading level=1 "Who's watching?"
+  Text variant=muted "A little world of stories, just for you."
+  Grid variant=profiles
+    For each=$items
+      Button variant=profile item=$item.id avatar=$item.avatar action=selectProfile
+        Text variant=avatar "$item.initial"
+        Text "$item.name"
+        Text variant=muted "$item.caption"
+  If condition=$hasProfiles
+    Button variant=outline action=newProfile icon=Plus "Add a profile"
+  If condition=$profileForm
+    Card variant=form
+      Heading level=2 "$formTitle"
+      If condition=$createProfile
+        Input name=profileName placeholder="Profile name" maxLength=40
+        Select name=profileKind label="Profile type" options=$kinds
+        Select name=profileRating label="Maximum rating" options=$ratings
+        Select name=profileAvatar label="Avatar colour" options=$avatars
+      Input name=profilePin type=password placeholder="Profile PIN" inputMode=numeric maxLength=12
+      Text variant=muted "Adult profiles require a 4–12 digit PIN. Kids cannot open adult profiles without it."
+      Row
+        Button variant=primary action=submitProfile "$formAction"
+        If condition=$hasProfiles
+          Button variant=outline action=cancelProfile "Cancel"

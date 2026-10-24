@@ -1,0 +1,14 @@
+Card variant=hero image=$hero.backdrop
+  Stack variant=hero-copy
+    Text variant=eyebrow "MY CINEMA · YOUR PRIVATE PREMIERE"
+    Text variant=muted "$hero.category"
+    Heading level=1 "$hero.title"
+    Row variant=metadata
+      Badge "$hero.rating"
+      Text "$hero.yearLabel"
+      Text "$hero.durationLabel"
+    Text variant=synopsis "$hero.overview"
+    Row
+      Button variant=light icon=Play item=$hero.id action=play "Play"
+      Button variant=glass icon=Info item=$hero.id action=detail "More info"
+  Text variant=hero-index "01 / YOUR COLLECTION"

@@ -1,0 +1,59 @@
+Page Settings variant=settings
+  Text variant=eyebrow "YOUR CINEMA, YOUR RULES"
+  Heading level=1 "Settings"
+  Grid variant=settings
+    Card variant=settings-panel
+      Heading level=2 "Viewing preferences"
+      Text variant=muted "$profileName"
+      Input name=preferredAudio placeholder="Preferred audio language (e.g. en)"
+      Input name=preferredSubtitle placeholder="Preferred subtitle language (or off)"
+      Checkbox name=autoplay label="Automatically play the next episode"
+      Checkbox name=recentSearches label="Remember recent searches on this device"
+      Checkbox name=tv label="TV mode with larger focus controls"
+      Button variant=primary action=savePreferences "Save preferences"
+      Button variant=outline action=clearSearches "Clear recent searches"
+      Button variant=outline action=profiles "Manage viewing profiles"
+    If condition=$admin
+      Card variant=settings-panel
+        Heading level=2 "Media folders"
+        Text variant=muted "Share the same folders with My Drive. Videos stay where they are."
+        For each=$libraries
+          Row variant=library
+            Stack
+              Text "$item.name"
+              Text variant=muted "$item.kind"
+              Text variant=path "$item.path"
+            Spacer
+            Button icon=Trash2 item=$item.id label="Remove library configuration, keep files" action=removeLibrary
+        Input name=libraryName placeholder="Library name"
+        Select name=libraryKind label="Library type" options=$libraryKinds
+        Input name=libraryPath placeholder="Full media folder path"
+        Checkbox name=lookupMetadata label="Look up titles and artwork online using media filenames"
+        Row
+          Button variant=primary action=addLibrary icon=FolderPlus "Add folder"
+          Button variant=outline action=scan icon=RefreshCw "Scan libraries"
+      Card variant=settings-panel
+        Heading level=2 "Media engine"
+        Text "$status"
+        Text variant=muted "$engine"
+        Text variant=muted "Library removal never deletes media. Bridge credentials are encrypted for this Windows account."
+        Button variant=outline action=refreshSettings "Refresh health"
+        Heading level=3 "Profile content policy"
+        Select name=editProfile label="Profile to edit" options=$profileOptions
+        Input name=editName placeholder="Profile display name"
+        Select name=editRating label="Maximum content age" options=$ratings
+        Input name=editPin type=password placeholder="New PIN (leave blank to retain)" inputMode=numeric
+        Input name=blockedTags placeholder="Blocked tags, comma separated"
+        Input name=allowedLibraries placeholder="Allowed Jellyfin library IDs, comma separated (empty = all)"
+        Button variant=primary action=editProfile "Save and lock profile"
+    Card variant=settings-panel
+      Heading level=2 "Backups and updates"
+      Text variant=muted "Workspace can pause the media engine and save a complete recovery copy. Your original videos need their own file backup."
+      If condition=$managed
+        Button variant=outline action=workspaceBackups "Open Workspace Backups"
+        Button variant=outline action=workspaceUpdates "Open Workspace Updates"
+      If condition=$standalone
+        Text variant=muted "Close My Cinema before copying its complete data folder to your backup drive. Restore into a new folder on the same Windows account. See the included setup guide for relocation and recovery."
+      Heading level=2 "Account"
+      Text variant=muted "Your OneAccount session is provided by MyAccounts in One Workspace."
+      Button variant=outline action=logout icon=LogOut "Sign out"
