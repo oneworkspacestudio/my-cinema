@@ -181,3 +181,80 @@ Final85 installer subsequently passed all7 managed checks using the exact app2
 suite source tests/vet pass; final scan/package/publication/promotion and real85/2
 installs are the remaining delivery steps. No further production code changes are
 planned unless a real install exposes a failure.
+
+
+## Live delivery checkpoint (25 October)
+
+App2 and Workspace85 are public, every GitHub asset size/digest verified, both
+promotions pushed and raw public URLs checked without authentication. App1 stays
+withheld; source tags and published assets remain immutable. App2 source c41734b,
+suite85 source dd11cc0, latest channel commit c356dd0.
+
+Primary now85/app2 with actual /cinema-health ready=true and Jellyfin12.3.0 setup
+complete. Main delivery receipt verifies exact EXE378e, manager
+babb087a789442b1e6b1c73a179d84310cfd95d6d6010e42b4b0819972c55053,
+every other app/package/executable (including independently updated Social7),
+existing OIDC clients, owner/paths/preferences and recovery credentials retained.
+Receipt: task tooling main-delivery-final85.json. Primary storage gate initially
+needed10520MB; only the generated app1 runtime cache was retired after all2827
+files matched the retained official archive. Supervisor restart caused a loaded
+DLL on the first removal; normal Workspace stop then allowed completion. No
+private state/media/recovery was removed. Normal backup guard then passed,
+update completed, latest verified rollback kept. Unknown/legacy cleanup remnants
+are retained by the existing cleanup policy.
+
+Remote83 update to85/new Cinema2 is running through its real Updates page. Only
+Workspace selected; Cinema included as a new default. Pre-update table saved to
+task tooling remote-before.txt (Drive5, Music5, Mail27, Social6, MyAI2). Downloads
+verified; external connection paused during server-side update. Do NOT repeat the
+install. CUA Chrome3 remoteUpdates tab585734208 (marked handoff); RDP user tab
+585733890 is the requested PC. Wait for reconnect/completion, reload after success
+to refresh static installed-version label, check Cinema2/other versions and actual
+media readiness. First-use UI may require the user's OneAccount login; do not use
+owner credentials or media as fixtures and do not create a real PIN/library.
+
+Primary Chrome app entry tab585734209 presents the real OneAccount sign-in at
+accounts.m8e.co.uk (normal first use; no credentials entered). Refresh the app entry
+before final delivery if its temporary OAuth state expires. All synthetic services
+and C task fixtures stopped/removed; source screenshots/reports and release assets
+retained on I. Three stopped managed-programs-* fixture folders on I can still be
+removed after checking process references. No subagents or Actions.
+
+Remaining: remote completion/real app verification, safe final screenshot evidence,
+confirm both installed bytes/media health, finish compact histories and push the
+sanitized delivery handoff. Do not claim complete until remote is verified. Final
+answer must call this the streaming preview/MVP and link the explicit deferred
+feature matrix (advanced imports/PWA/offline/native-TV/standalone restore wizard).
+
+
+## Final delivery verified (25 October)
+
+Both requested PCs now run Workspace85 and Cinema2. The remote normal public
+update completed all stages in23m41s, retaining the previous app versions and
+latest verified rollback. Closing/reopening its updater loaded the current85
+controller; a fresh public release check reports Cinema2 and Workspace85 up to
+date. The old controller's Social review warning disappeared after restart;
+Social7 is offered separately and was not applied. The unrelated My3D package
+review remains. No update/reinstall was repeated.
+
+Primary has independent executable/catalog SHA256 and actual media-readiness
+verification. Remote evidence is the normal updater's verified downloads and
+successful startup transaction (including required /cinema-health readiness),
+then a current-controller installed-version check; do not describe that as an
+independent remote filesystem hash audit. Sanitized receipt is published at
+the app repository docs/delivery-acceptance.json. Local task tooling retains
+remote-before.txt, remote-after.txt, remote-final-controller.txt and installed
+version screenshot; do not publish private desktop captures into Git history.
+
+Both real app entry URLs redirect to their normal OneAccount sign-in. No owner
+credentials, real profile PINs or media libraries were used as fixtures. First
+use requires the user to sign in, create a viewing profile/PIN and choose media
+folders. Advanced/deferred capabilities remain explicit in docs/SUPPORT.md;
+this is the functional streaming preview, not clean-host/reboot certification.
+
+All named synthetic C fixtures and three stopped managed-programs-* fixture
+directories on the artifact drive were removed after path/reparse/process
+checks. Source, release assets, provenance, synthetic acceptance evidence and
+owner recovery remain. Public immutable tags/assets are unchanged. Source,
+release publication, public channel promotion and both installs are complete;
+no implementation or delivery operation remains running. No subagents/Actions.

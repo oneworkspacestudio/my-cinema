@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "scope": "Functional streaming preview; feature boundaries in SUPPORT.md",
+  "releases": {
+    "cinema": "v0.1.0-preview.2",
+    "workspace": "v0.3.0-preview.85",
+    "cinemaSource": "c41734b0e0ce3b7655da84abe91778e52a593799",
+    "workspaceSource": "dd11cc06e5dbd7caf8b71691b6f83a8add6bcc40",
+    "cinemaExecutableSHA256": "378e0ebba0c31d6c319e48480ff34496e3ea237af3d5c9a91f5ad9e7e5dd375b",
+    "workspaceExecutableSHA256": "babb087a789442b1e6b1c73a179d84310cfd95d6d6010e42b4b0819972c55053",
+    "publishedAssetSizesAndDigestsVerified": true,
+    "publicChannelsVerifiedWithoutAuthentication": true
+  },
+  "primaryInstallation": {
+    "normalBackedUpUpdateCompleted": true,
+    "cinemaVersion": "0.1.0-preview.2",
+    "workspaceVersion": "0.3.0-preview.85",
+    "executableHashesIndependentlyVerified": true,
+    "mediaReadinessIndependentlyVerified": true,
+    "privateMediaEngineVersion": "12.3.0",
+    "otherAppsPackagesAndExecutableHashesPreserved": true,
+    "identityPathsPreferencesAndRecoveryPreserved": true,
+    "latestVerifiedRollbackRetained": true
+  },
+  "secondInstallation": {
+    "normalPublicUpdaterCompleted": true,
+    "cinemaVersion": "0.1.0-preview.2",
+    "workspaceVersion": "0.3.0-preview.85",
+    "currentControllerRestartAndReleaseCheckVerified": true,
+    "cinemaAndWorkspaceReportedUpToDate": true,
+    "downloadDigestsAndMediaReadinessEnforcedByNormalUpdater": true,
+    "independentRemoteFilesystemHashAuditPerformed": false,
+    "priorAppVersionsRetainedInBeforeAfterInventory": true,
+    "latestVerifiedRollbackRetained": true
+  },
+  "firstUse": "Sign in through OneAccount, create a permitted viewing profile/PIN and select existing media folders. No owner media or viewing PIN was created as a test fixture.",
+  "acceptanceBoundaries": "Representative workstation and synthetic native/managed tests; no clean-host, reboot or arbitrary-hardware certification."
+}
