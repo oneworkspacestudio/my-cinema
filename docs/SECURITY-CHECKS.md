@@ -33,7 +33,7 @@ Jellyfin's own local diagnostics can include filesystem paths and upstream strea
 parameters. They remain inside protected app data and are not returned through
 the user API. Review and redact logs before sharing them.
 
-Preview.3 adds owner-only video uploads behind an unlocked adult profile. Every
+Preview.4 delivers owner-only video uploads behind an unlocked adult profile. Every
 chunk, completion, status and cancellation request verifies the current account,
 session and profile; writes retain Origin/CSRF enforcement. Destination IDs map
 to existing validated library roots; clients cannot supply arbitrary write paths.

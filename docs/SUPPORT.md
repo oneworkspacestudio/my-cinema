@@ -15,7 +15,7 @@ core and responsive UI, with the following explicit boundaries.
 | Audio/subtitle/version selection and WebVTT conversion | Implemented; representative acceptance only, not every codec/device |
 | Keyboard, touch, TV spatial focus, reduced motion | Implemented; desktop/tablet/phone/TV browser layouts checked |
 | My Drive shared filesystem roots, stable polling, scans, non-destructive removal | Implemented; originals are indexed in place |
-| Add videos, chunked browser uploads, progress/cancel, new destination folder | Implemented in preview.3; unlocked adult owner only, 100 GB per video, duplicate protection, Windows atomic publication |
+| Add videos, chunked browser uploads, progress/cancel, new destination folder | Delivered in preview.4; unlocked adult owner only, 100 GB per video, duplicate protection, Windows atomic publication |
 | Genre similarity suggestions, truthful date-added view | Implemented; no fabricated popularity figures |
 | Internet metadata lookup | Explicit library option; local NFO works without it |
 | Managed verified updates and complete stop/checkpoint backup/restore | Existing Workspace workflow, linked from Settings |

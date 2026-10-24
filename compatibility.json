@@ -2,7 +2,7 @@
   "schema": 1,
   "id": "cinema",
   "name": "My Cinema",
-  "version": "0.1.0-preview.3",
+  "version": "0.1.0-preview.4",
   "route": "/cinema",
   "workspaceInstallerIntegration": 3,
   "os": "windows",

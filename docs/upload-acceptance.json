@@ -1,4 +1,5 @@
 {
+  "version": "0.1.0-preview.4",
   "checks": [
     "Visible Add videos entry and real new destination folder creation",
     "Chunked browser upload recovers lost chunk and completion replies and saves exact original bytes",

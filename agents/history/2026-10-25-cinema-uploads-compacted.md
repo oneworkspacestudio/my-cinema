@@ -38,3 +38,16 @@ At this checkpoint: source3 commit/tag, public release3 and channel promotion,
 then both normal app-only updates to3, actual version/media-readiness and final
 delivery receipts are pending. Workspace85 manager remains sufficient; preserve
 all unrelated app versions/pins. Do not claim installs finished until verified.
+
+## Corrected managed contract
+
+Preview3 source292aefc was published with all15 asset hashes verified, but its
+standalone update manifest inherited a schema1/integration2 minimumManager field
+from preview2. Native85 correctly rejects that before any installation mutation
+(manager requirements require schema2/integration3). Neither PC installed3.
+Do not alter published3 assets/tag; withhold it and supersede with4. The media/UI
+implementation is unchanged. Preview4 uses schema2/integration3 and minimum85,
+with a new repository prepublication checker for all ZIP member hashes and the
+requirements header. Also regenerate/compare using the manager's exported
+MakeAppUpdateManifest + RequireManager before publication. Complete both normal
+app-only installs and final evidence. Keep source/withholdings/history honest.

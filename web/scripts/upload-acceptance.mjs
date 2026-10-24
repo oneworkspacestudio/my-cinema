@@ -4,12 +4,14 @@ import {createHash} from 'node:crypto';
 const fixture=process.env.CINEMA_QA_ROOT||'C:/Projects/.cache/cinema-upload-20261025';
 const artifacts=process.env.CINEMA_QA_ARTIFACTS||'I:/Projects/tooling/my-cinema-20261024/upload3-evidence';
 const origin=process.env.CINEMA_QA_ORIGIN||'http://localhost:29320';
+const expectedVersion=process.env.CINEMA_QA_VERSION||'0.1.0-preview.4';
 const checks=[],errors=[];let browser;
 const check=s=>{checks.push(s);console.log('PASS',s)};
 const hash=b=>createHash('sha256').update(b).digest('hex');
 await mkdir(artifacts,{recursive:true});
 try{
  await expect.poll(async()=>{try{return (await fetch(origin+'/cinema-health')).ok}catch{return false}},{timeout:120000}).toBe(true);
+ expect((await(await fetch(origin+'/cinema-health')).json()).version).toBe(expectedVersion);
  browser=await chromium.launch({channel:'msedge',headless:true});
  const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
  await page.goto(origin);
@@ -46,5 +48,5 @@ try{
  await page.getByLabel('Choose videos',{exact:true}).setInputFiles({name:'Cancel this video.mp4',mimeType:'video/mp4',buffer:await readFile(fixture+'/First Upload.mp4')});await page.getByRole('button',{name:'Upload selected videos',exact:true}).click();await page.getByRole('button',{name:'Cancel upload',exact:true}).click();await expect(page.getByText(/Unfinished upload cancelled|Upload cancelled/)).toBeVisible();
  await expect.poll(async()=>(await readdir(fixture+'/videos')).filter(n=>n.startsWith('.cinema-upload-')).length,{timeout:15000}).toBe(0);expect((await readdir(fixture+'/videos')).includes('Cancel this video')).toBe(false);await page.unroute('**/api/admin/uploads/*?offset=*');check('Cancel aborts transfer and removes only unfinished staging');
  await page.getByLabel('Choose videos',{exact:true}).setInputFiles({name:'Wrong file.mp4',mimeType:'video/mp4',buffer:Buffer.from('MZ'+('not a video'.repeat(10)))});await page.getByRole('button',{name:'Upload selected videos',exact:true}).click();await expect(page.getByText(/not a supported video container/)).toBeVisible();expect((await readdir(fixture+'/videos')).includes('Wrong file')).toBe(false);expect(errors).toEqual([]);check('Renamed executable/text rejected before publication; no browser errors');
- await writeFile(artifacts+'/acceptance.json',JSON.stringify({checks,errors,originalSyntheticMedia:true,liveOwnerDataUsed:false,cleanHost:false},null,2));
+ await writeFile(artifacts+'/acceptance.json',JSON.stringify({version:expectedVersion,checks,errors,originalSyntheticMedia:true,liveOwnerDataUsed:false,cleanHost:false},null,2));
 }catch(e){await writeFile(artifacts+'/failure.txt',String(e.stack));throw e}finally{await browser?.close()}
