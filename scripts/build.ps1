@@ -1,7 +1,7 @@
-param([string]$Go='go',[string]$Version='0.1.0-preview.1',[string]$Out='dist',[Parameter(Mandatory)][string]$RuntimeZip)
+param([string]$Go='go',[string]$Version='0.1.0-preview.2',[string]$Out='dist',[Parameter(Mandatory)][string]$RuntimeZip)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
-$expected='64b81a7b01b4dfb4ad3380a367cdeaf59878d9070c0d5e0cf84025e58ed3e853'
+$expected='5de2eb4e17fe77132c3f681fcc80cd63846f9ce78d8e7b75d7f9ed7e292b16b3'
 if((Get-FileHash -LiteralPath $RuntimeZip -Algorithm SHA256).Hash.ToLowerInvariant() -cne $expected){throw 'Pinned Jellyfin runtime checksum mismatch'}
 Push-Location (Join-Path $root 'web')
 try{npm ci --no-audit --no-fund;if($LASTEXITCODE){throw 'Dependency install failed'};npm run build;if($LASTEXITCODE){throw 'Frontend build failed'}}finally{Pop-Location}

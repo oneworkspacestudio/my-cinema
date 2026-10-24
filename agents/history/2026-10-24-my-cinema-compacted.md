@@ -131,3 +131,53 @@ browser PIN, and a different real subject denied household access/self-grant.
 No page errors. Synthetic runtime and children stopped. Acceptance reports are
 included with the release. Source publication, promotion and owner delivery
 follow this source commit; consult later delivery receipts/history for outcome.
+
+## Corrected final candidate (supersedes prior feasibility conclusions)
+
+App1 was published/promoted, but final review found omitted Home video items and
+stored language defaults not applied at play. The normal primary install of the
+unpublished Workspace84 candidate preserved all old apps/bytes/identity/recovery,
+but its media encoder preflight failed0xc0000409. Generic apphost health still
+answered200, so it was not media readiness proof. Do not report that installation
+as final success. Its sanitized receipt is preliminary-main84-delivery.json in
+task tooling. The84 public release draft was deleted before publication; its
+source tag is preserved. Final integration is85 from public83, app2.
+
+The earlier app-health-marker workaround was not sufficient and is removed.
+Official Jellyfin FFmpeg8.1.2-1 passed80 native Service launches with and80 without
+the inherited marker, with zero failures. Pins: official encoder ZIP
+bc2a3b5f0868ff446fd8d472c124fe9430cf5ac972d02433c884170afb2e75e9;
+source172f1454c4bc4dd9a3754e9db024708ef7a83f0c, archive SHA256
+948a49055f3dcc8d752be441bc4a0702eaefb7e5508699ffc27013f7a33da035.
+Unmodified server12.3 files plus unmodified official8.1.2 binaries are assembled
+by scripts/assemble-runtime.py. Exact runtime ZIP SHA256
+5de2eb4e17fe77132c3f681fcc80cd63846f9ce78d8e7b75d7f9ed7e292b16b3.
+Versioned private runtime directories preserve the old pin on upgrades. Updated
+source/provenance/licenses distinguish the assembled archive from vendor binaries.
+
+App2 candidate EXE SHA256
+378e0ebba0c31d6c319e48480ff34496e3ea237af3d5c9a91f5ad9e7e5dd375b
+passed12 fresh NTFS native checks, including real Home video scan/search/home/list/
+ranges and saved ISO audio/subtitle selection with actual converted captions.
+First preference assertions sampled the select before its update; final harness
+waits for the save acknowledgment and polls selection, and real playback passed.
+All previous HLS/browser/child/PIN/session/layout checks still pass. No marker is
+forwarded to media children. New public /cinema-health returns503 until the media
+engine is ready; suite85 uses that actual readiness contract. Candidate full85
+includes the same exact EXE; final managed acceptance is running.
+
+Next: finish managed85, update its report, commit/tag/publish app2 and suite85,
+promote raw channel (withhold app1 without altering its immutable assets), then
+normal backed-up upgrade of main84/Cinema1 and remote to85/Cinema2. Current helper
+must allow an existing Cinema1 and exclude Cinema-owned changes from preservation
+comparisons; still preserve every other app/package/client/owner/path/recovery.
+Verify actual /cinema-health and private engine on both PCs before completion.
+Both source pushes/releases85/2 and final installs remain pending here. Keep
+newest owner rollback. Remove only known stopped synthetic scratch after saving
+evidence. C temp roots must be NTFS; large builds remain on I. No subagents/Actions.
+
+Final85 installer subsequently passed all7 managed checks using the exact app2
+378e candidate and actual media readiness. Test runtime/children stopped. App and
+suite source tests/vet pass; final scan/package/publication/promotion and real85/2
+installs are the remaining delivery steps. No further production code changes are
+planned unless a real install exposes a failure.

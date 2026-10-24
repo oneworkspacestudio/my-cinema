@@ -9,20 +9,22 @@ Go modules retain their upstream LICENSE files; exact versions are in go.sum.
 
 Separate bundled engine:
 Jellyfin Server 12.3 (API 12.3.0), GPL-2.0-or-later.
-Official portable ZIP, unmodified:
+Base Jellyfin official portable ZIP (server binaries remain unmodified):
 https://repo.jellyfin.org/files/server/windows/stable/v12.3/amd64/jellyfin_12.3-amd64.zip
 SHA256 64b81a7b01b4dfb4ad3380a367cdeaf59878d9070c0d5e0cf84025e58ed3e853
 Corresponding source: https://github.com/jellyfin/jellyfin/tree/v12.3
 Bundled web source: https://github.com/jellyfin/jellyfin-web/tree/v12.3
 
-jellyfin-ffmpeg 8.1.3-1, FFmpeg 8.1.3-Jellyfin, GPL-3.0-or-later build.
+jellyfin-ffmpeg 8.1.2-1, FFmpeg 8.1.2-Jellyfin, GPL-3.0-or-later build.
 Corresponding source/build scripts:
-https://github.com/jellyfin/jellyfin-ffmpeg/tree/v8.1.3-1
+https://github.com/jellyfin/jellyfin-ffmpeg/tree/v8.1.2-1
 Official binaries and provenance:
-https://github.com/jellyfin/jellyfin-ffmpeg/releases/tag/v8.1.3-1
+https://github.com/jellyfin/jellyfin-ffmpeg/releases/tag/v8.1.2-1
 
 The official portable archive preserves the vendor's complete original notices,
 including .NET and native dependencies. The source/provenance manifest distributed
 alongside this release identifies the immutable upstream revisions and downloadable
 source archives. Engine licensing does not change merely because its web UI is
 disabled. No engine source or binaries were modified.
+
+The runtime assembly replaces FFmpeg/ffprobe with the unmodified official8.1.2-1 Windows binaries. Source/provenance and scripts/assemble-runtime.py record every vendor checksum. Exact published assembly SHA256 5de2eb4e17fe77132c3f681fcc80cd63846f9ce78d8e7b75d7f9ed7e292b16b3. No vendor program binary was patched.

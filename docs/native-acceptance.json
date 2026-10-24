@@ -2,11 +2,13 @@
   "checks": [
     "Private engine setup and distinct restricted adult/child users are real",
     "Actual shared-folder indexing reads original synthetic movie and series metadata",
+    "Real Home videos library appears in browse, search, home and My List and serves authorized ranged playback",
     "Authorised ranged video bytes, credential isolation, writeback and server resume position",
     "Real MKV episode is transcoded by pinned FFmpeg into rewritten private HLS playlists and segments",
     "Child catalog/search/direct detail/playback and admin denial; independent watch history and My List; adult PIN boundary",
     "Native embedded UI details/Escape, live search and actual browser playback",
     "Actual browser HLS/MSE playback, late-episode Up Next and next episode video",
+    "Saved ISO language preferences actually select audio and converted captions at playback start",
     "Profile changes clear prior title data across tabs and reject stale profile expectations",
     "Desktop/tablet/phone/TV layouts have no horizontal document overflow",
     "Anonymous and CSRF requests rejected; no browser runtime errors"

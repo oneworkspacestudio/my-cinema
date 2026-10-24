@@ -123,7 +123,7 @@ func (a *App) catalog(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		return
 	}
-	q := url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series"}, "SortBy": {"SortName"}, "SortOrder": {"Ascending"}}
+	q := url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series,Video"}, "SortBy": {"SortName"}, "SortOrder": {"Ascending"}}
 	switch r.URL.Query().Get("type") {
 	case "movie":
 		q.Set("IncludeItemTypes", "Movie")
@@ -176,9 +176,9 @@ func (a *App) home(w http.ResponseWriter, r *http.Request) {
 		id, name string
 		q        url.Values
 	}{
-		{"list", "My List", url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series"}, "Filters": {"IsFavorite"}, "SortBy": {"SortName"}}},
-		{"recent", "Recently added", url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series"}, "SortBy": {"DateCreated"}, "SortOrder": {"Descending"}}},
-		{"movies", "Movie night", url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie"}, "SortBy": {"SortName"}}},
+		{"list", "My List", url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series,Video"}, "Filters": {"IsFavorite"}, "SortBy": {"SortName"}}},
+		{"recent", "Recently added", url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series,Video"}, "SortBy": {"DateCreated"}, "SortOrder": {"Descending"}}},
+		{"movies", "Movie night", url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Video"}, "SortBy": {"SortName"}}},
 		{"series", "Your next series", url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Series"}, "SortBy": {"SortName"}}},
 	}
 	for _, q := range queries {
@@ -192,7 +192,7 @@ func (a *App) home(w http.ResponseWriter, r *http.Request) {
 	}
 	if len(resume.Items) > 0 && visible(p, resume.Items[0]) && len(resume.Items[0].Genres) > 0 {
 		seed := resume.Items[0]
-		out, e := a.engine.Items(r.Context(), c, url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series"}, "Genres": {seed.Genres[0]}, "Limit": {"20"}})
+		out, e := a.engine.Items(r.Context(), c, url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series,Video"}, "Genres": {seed.Genres[0]}, "Limit": {"20"}})
 		if e == nil {
 			filtered := out.Items[:0]
 			for _, i := range out.Items {
@@ -232,7 +232,7 @@ func (a *App) search(w http.ResponseWriter, r *http.Request) {
 		apphost.JSON(w, 200, map[string]any{"items": []Media{}})
 		return
 	}
-	out, e := a.engine.Items(r.Context(), c, url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series,Episode"}, "SearchTerm": {q}, "Limit": {"80"}})
+	out, e := a.engine.Items(r.Context(), c, url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series,Episode,Video"}, "SearchTerm": {q}, "Limit": {"80"}})
 	if e != nil {
 		a.fail(w, e)
 		return
@@ -244,7 +244,7 @@ func (a *App) myList(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		return
 	}
-	out, e := a.engine.Items(r.Context(), c, url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series"}, "Filters": {"IsFavorite"}, "SortBy": {"SortName"}, "Limit": {"500"}})
+	out, e := a.engine.Items(r.Context(), c, url.Values{"Recursive": {"true"}, "IncludeItemTypes": {"Movie,Series,Video"}, "Filters": {"IsFavorite"}, "SortBy": {"SortName"}, "Limit": {"500"}})
 	if e != nil {
 		a.fail(w, e)
 		return

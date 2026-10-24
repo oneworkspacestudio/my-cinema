@@ -1,9 +1,23 @@
 {
   "schema": 1,
   "runtime": {
-    "url": "https://repo.jellyfin.org/files/server/windows/stable/v12.3/amd64/jellyfin_12.3-amd64.zip",
-    "sha256": "64b81a7b01b4dfb4ad3380a367cdeaf59878d9070c0d5e0cf84025e58ed3e853",
-    "modified": false
+    "url": "https://github.com/oneworkspacestudio/my-cinema/releases/download/v0.1.0-preview.2/mycinema-runtime-12.3-8.1.2.zip",
+    "sha256": "5de2eb4e17fe77132c3f681fcc80cd63846f9ce78d8e7b75d7f9ed7e292b16b3",
+    "modified": true,
+    "vendorBinariesModified": false,
+    "serverArchive": {
+      "url": "https://repo.jellyfin.org/files/server/windows/stable/v12.3/amd64/jellyfin_12.3-amd64.zip",
+      "sha256": "64b81a7b01b4dfb4ad3380a367cdeaf59878d9070c0d5e0cf84025e58ed3e853"
+    },
+    "ffmpegArchive": {
+      "url": "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v8.1.2-1/jellyfin-ffmpeg_8.1.2-1_portable_win64-clang-gpl.zip",
+      "sha256": "bc2a3b5f0868ff446fd8d472c124fe9430cf5ac972d02433c884170afb2e75e9"
+    },
+    "replacements": {
+      "jellyfin/ffmpeg.exe": "9a8a95cf27611104a33bb654765b32fc080fc8b4a6ad671e7be812dbe93bfa73",
+      "jellyfin/ffprobe.exe": "1f2024cb6105db8c04da70f9e23811755498b92e7cd9db028e7bbd68e658050b"
+    },
+    "assemblyScript": "scripts/assemble-runtime.py"
   },
   "sources": [
     {
@@ -26,12 +40,12 @@
     },
     {
       "repository": "jellyfin/jellyfin-ffmpeg",
-      "tag": "v8.1.3-1",
-      "commit": "253db2a7b0a8045c54ce68ce33d7f601229b1822",
-      "sourceURL": "https://codeload.github.com/jellyfin/jellyfin-ffmpeg/zip/253db2a7b0a8045c54ce68ce33d7f601229b1822",
-      "file": "jellyfin-ffmpeg-v8.1.3-1-source.zip",
-      "size": 24390261,
-      "sha256": "c382b7ac7f26adc1c6d813733d69a816faa629d5fc16b4d99168f12d582542b8"
+      "tag": "v8.1.2-1",
+      "commit": "172f1454c4bc4dd9a3754e9db024708ef7a83f0c",
+      "sourceURL": "https://codeload.github.com/jellyfin/jellyfin-ffmpeg/zip/172f1454c4bc4dd9a3754e9db024708ef7a83f0c",
+      "file": "jellyfin-ffmpeg-v8.1.2-1-source.zip",
+      "size": 24263532,
+      "sha256": "948a49055f3dcc8d752be441bc4a0702eaefb7e5508699ffc27013f7a33da035"
     }
   ]
 }

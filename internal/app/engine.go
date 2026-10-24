@@ -23,16 +23,9 @@ func (a *App) engineStatus(ready bool, msg string) {
 	a.mu.Unlock()
 }
 
-// Preserve only the existing Windows app-health context. Dropping this marker
-// from a parent that has it causes the pinned native encoder to fail at process
-// initialization on the reference host. Never invent a compatibility layer or
-// forward arbitrary layer options/account/provider environment variables.
+// Media children receive no account, provider or compatibility-layer options.
 func mediaEnvironment() []string {
-	env := []string{"DOTNET_CLI_TELEMETRY_OPTOUT=1", "LANG=C.UTF-8", "LC_ALL=C.UTF-8"}
-	if os.Getenv("__COMPAT_LAYER") == "DetectorsAppHealth" {
-		env = append(env, "__COMPAT_LAYER=DetectorsAppHealth")
-	}
-	return env
+	return []string{"DOTNET_CLI_TELEMETRY_OPTOUT=1", "LANG=C.UTF-8", "LC_ALL=C.UTF-8"}
 }
 
 var errEngineExit = errors.New("private media engine exited")
@@ -104,7 +97,7 @@ func (a *App) engineCycle(ctx context.Context) error {
 		return e
 	}
 	var encoderVersion bytes.Buffer
-	if e = apphost.Service(ctx, filepath.Join(runtime, "ffmpeg.exe"), root, []string{"-version"}, mediaEnvironment(), &encoderVersion); e != nil || !strings.HasPrefix(encoderVersion.String(), "ffmpeg version 8.1.3-Jellyfin") {
+	if e = apphost.Service(ctx, filepath.Join(runtime, "ffmpeg.exe"), root, []string{"-version"}, mediaEnvironment(), &encoderVersion); e != nil || !strings.HasPrefix(encoderVersion.String(), "ffmpeg version 8.1.2-Jellyfin") {
 		a.engineStatus(false, "The bundled video encoder could not start. Check the local diagnostic log and restart My Cinema.")
 		a.H.Log.Error("bundled encoder validation failed", "error", fmt.Sprint(e), "output", encoderVersion.String())
 		<-ctx.Done()

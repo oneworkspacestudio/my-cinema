@@ -10,7 +10,7 @@ npm run build
 cd ..
 go test ./...
 go vet ./...
-pwsh -File scripts/build.ps1 -RuntimeZip /path/to/jellyfin_12.3-amd64.zip
+pwsh -File scripts/build.ps1 -RuntimeZip /path/to/mycinema-runtime-12.3-8.1.2.zip
 ```
 
 `scripts/build.ps1` builds the frontend/launcher and appends the verified pinned
@@ -46,3 +46,5 @@ session. Stream IDs and resource IDs are opaque, bounded and profile/session-bou
 Media authority is rechecked before each manifest, segment, artwork and detail.
 
 See ADR-001-architecture.md and SECURITY-CHECKS.md for the engine and trust model.
+
+Use the pinned runtime assembly asset from the same My Cinema release. The optional Python assemble-runtime.py records how unmodified official server and encoder archives are combined; ZIP deflate bytes can vary with zlib. The published runtime checksum remains mandatory.

@@ -1,7 +1,7 @@
 # Security and compatibility
 
 Pinned compatibility: Windows amd64; Jellyfin Server 12.3 (API 12.3.0);
-jellyfin-ffmpeg 8.1.3-1 / FFmpeg 8.1.3-Jellyfin. Portable archive checksum is in
+jellyfin-ffmpeg 8.1.2-1 / FFmpeg 8.1.2-Jellyfin. Portable archive checksum is in
 THIRD-PARTY-LICENSES.txt and enforced before extraction. Fresh setup requires the
 legacy first-user GET before updating the startup user. User policy updates merge
 the server's required authentication/password-reset provider identifiers.

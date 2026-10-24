@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-const RuntimeSHA256 = "64b81a7b01b4dfb4ad3380a367cdeaf59878d9070c0d5e0cf84025e58ed3e853"
+const RuntimeSHA256 = "5de2eb4e17fe77132c3f681fcc80cd63846f9ce78d8e7b75d7f9ed7e292b16b3"
 
 // Extract only the pinned vendor archive, into private app-relative state.
 // The publisher appends the exact vendor ZIP and a fixed-size footer to the PE.
@@ -56,7 +56,7 @@ func prepareRuntime(data, archive string) (string, error) {
 	if e != nil || hex.EncodeToString(sum.Sum(nil)) != RuntimeSHA256 {
 		return "", errors.New("the media runtime archive failed its release checksum")
 	}
-	root := filepath.Join(data, "runtime", "jellyfin")
+	root := filepath.Join(data, "runtime", "jellyfin-"+RuntimeSHA256[:12])
 	marker := filepath.Join(root, ".mycinema-runtime")
 	if b, e := os.ReadFile(marker); e == nil && string(b) == RuntimeSHA256 {
 		for _, name := range []string{"jellyfin.exe", "ffmpeg.exe", "ffprobe.exe"} {

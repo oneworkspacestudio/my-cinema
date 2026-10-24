@@ -86,6 +86,16 @@ func New(h *apphost.Host) (*App, error) {
 	for _, r := range routes {
 		h.Mux.HandleFunc(r.path, h.Require(r.fn))
 	}
+	h.Mux.HandleFunc("GET /cinema-health", func(w http.ResponseWriter, r *http.Request) {
+		a.mu.Lock()
+		ready := a.ready
+		a.mu.Unlock()
+		code := http.StatusOK
+		if !ready {
+			code = http.StatusServiceUnavailable
+		}
+		apphost.JSON(w, code, map[string]any{"ready": ready, "version": h.Config.Version})
+	})
 	return a, nil
 }
 func (a *App) saveSecretsLocked() error {

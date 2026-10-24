@@ -15,7 +15,7 @@ func TestMediaEnvironmentDoesNotAdoptCredentialsOrInventLayers(t *testing.T) {
 		if strings.Contains(env, "not-for-media") || strings.Contains(env, "RunAsInvoker") {
 			t.Fatal("unexpected media environment")
 		}
-		if strings.Contains(env, "__COMPAT_LAYER=") != (layer == "DetectorsAppHealth") {
+		if strings.Contains(env, "__COMPAT_LAYER=") {
 			t.Fatal("app health inheritance changed")
 		}
 	}
