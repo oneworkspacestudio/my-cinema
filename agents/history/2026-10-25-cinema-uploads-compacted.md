@@ -51,3 +51,56 @@ with a new repository prepublication checker for all ZIP member hashes and the
 requirements header. Also regenerate/compare using the manager's exported
 MakeAppUpdateManifest + RequireManager before publication. Complete both normal
 app-only installs and final evidence. Keep source/withholdings/history honest.
+
+## Published correction and installed primary
+
+Cinema4 source d8ff391f2ef88a510efd3cdbb588e20a56741e2e is public; all15
+published asset sizes/digests and the unauthenticated channel were verified.
+Its EXE is eb175cb610957b585c75467b9369397af47420319c57a4b5488a6888dbb44c37.
+Six fresh browser checks passed on this exact packaged4, including actual indexed
+playback, lost-response recovery and byte preservation. Named synthetic NTFS data
+and its verified child processes were removed after acceptance; evidence remains.
+
+The second PC's normal default catalog tracks four Cinema runtime/licence
+packages, while full catalogs track ten including optional guides. Native85
+rejects untracked guides in the valid4 manifest on the minimal layout. Workspace86
+allows only the exact known missing Cinema guide/provenance ID/path pairs, using
+the existing compatibility-document boundary. Runtime/foreign/moved/missing
+tracked-document regression guards remain. Missing guides are not installed.
+Both public minimal/full catalog checks pass. Never mutate published4 assets.
+
+Workspace86 source d6a78d1f5c6147ab695f2c5524027b2cf4b08497 is public; all28
+asset sizes/digests and the unauthenticated channel verified. Manager SHA256
+514cc6d88ad96e40a05efc5897e9e026cb15dd6b65e7bd647fca75b22ce2dcdc. Channel
+promotion a187fd8 retains all unrelated records and withheld3. No Actions.
+
+Primary normal public app-only update to Cinema4 and then normal manager-only
+update to86 completed. The online manager attempt safely failed its free-space
+preflight and restarted85; the successful attempt used the exact public86 bundle
+staged outside C, with all normal checksum/backup/rollback/startup guards. Both
+installed EXE hashes, actual Cinema readiness, other app/package/executable bytes,
+identity/OIDC/recovery credentials, paths/ports/preferences were verified. Latest
+verified rollback retained; unknown cleanup items preserved. Receipts in task
+tooling: upload4-primary-delivery.json and manager86-primary-delivery.json.
+
+## Second PC completion and final delivery
+
+The user-selected remote desktop PC completed one normal public Workspace86 +
+Cinema4 transaction in23m59s. Other updates were unchecked. All apps healthy and
+latest verified85 rollback retained; older automatic rollback cleaned normally.
+Independent read-only remote PowerShell audit compared before/after app contracts,
+package pins,25 other process hashes, owner/paths/ports/preferences and app count.
+All passed; both final EXE hashes match public pins; actual Cinema4 readiness and
+private Jellyfin12.3 startup complete. Four Cinema packages remain tracked.
+This follow-up DOES include an independent remote filesystem hash audit, unlike
+the prior2 delivery. A current86 public check reports Cinema4/Workspace86 up to
+date. Social6 remains unchanged; its separate7 offer and old My3D review remain.
+
+Remote audit receipt stays protected on that PC; task tooling retains sanitized
+audit/version/completion screenshots and remote86-after.txt. Public aggregate:
+docs/upload-delivery.json. Completed updater closed, task terminal closed and
+remote input toggle restored. Existing unrelated services left running. Cinema
+is open at its normal adult profile PIN gate; no owner fixtures were created.
+First use: unlock adult owner profile, Add videos, connect a full server-side
+destination path, then select/upload videos. Source, releases, promotion and both
+installations complete. No running delivery operation or required feature work.

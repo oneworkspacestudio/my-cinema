@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "scope": "Visible Add videos entry, browser uploads and media-folder connection",
+  "releases": {
+    "cinema": "v0.1.0-preview.4",
+    "workspace": "v0.3.0-preview.86",
+    "cinemaSource": "d8ff391f2ef88a510efd3cdbb588e20a56741e2e",
+    "workspaceSource": "d6a78d1f5c6147ab695f2c5524027b2cf4b08497",
+    "cinemaExecutableSHA256": "eb175cb610957b585c75467b9369397af47420319c57a4b5488a6888dbb44c37",
+    "workspaceExecutableSHA256": "514cc6d88ad96e40a05efc5897e9e026cb15dd6b65e7bd647fca75b22ce2dcdc",
+    "allPublishedAssetSizesAndDigestsVerified": true,
+    "publicChannelsVerifiedWithoutAuthentication": true,
+    "rejectedPreview3WithheldAndNeverInstalled": true,
+    "publishedTagsAndAssetsUnchanged": true
+  },
+  "primaryInstallation": {
+    "cinemaVersion": "0.1.0-preview.4",
+    "workspaceVersion": "0.3.0-preview.86",
+    "normalBackedUpUpdatesCompleted": true,
+    "publicAppOnlyThenManagerOnlyUpdate": true,
+    "managerBundleStagedOnArtifactDriveAfterSafeCapacityPreflightFailure": true,
+    "executableHashesIndependentlyVerified": true,
+    "cinemaAndPrivateMediaEngineReadinessIndependentlyVerified": true,
+    "otherAppContractsPackagePinsAndExecutableHashesRetained": true,
+    "ownerIdentityPathsPortsPreferencesAndRecoveryCredentialsRetained": true,
+    "latestVerifiedRollbackRetained": true
+  },
+  "secondInstallation": {
+    "cinemaVersion": "0.1.0-preview.4",
+    "workspaceVersion": "0.3.0-preview.86",
+    "normalPublicBackedUpUpdateCompleted": true,
+    "selectedWorkspaceAndCinemaOnly": true,
+    "updateCompletionSeconds": 1439,
+    "allAppsHealthyAfterRestart": true,
+    "independentRemoteFilesystemHashAuditPerformed": true,
+    "independentAuditMethod": "Read-only PowerShell audit through the user-selected remote desktop; protected local receipt and all-pass result observed",
+    "cinemaAndPrivateMediaEngineReadinessIndependentlyVerified": true,
+    "otherAppContractsPackagePinsAndExecutableHashesRetained": true,
+    "otherProcessExecutablesChecked": 25,
+    "ownerPathsPortsPreferencesAndAppCountRetained": true,
+    "minimalCinemaPackageCountRetained": 4,
+    "currentControllerReportsCinemaAndWorkspaceUpToDate": true,
+    "latestVerifiedRollbackRetained": true
+  },
+  "functionalAcceptance": {
+    "receipt": "upload-acceptance.json",
+    "exactPackagedPreview4Tested": true,
+    "syntheticProtectedNTFSFixtureOnly": true,
+    "realChunkedUploadIndexingAndBrowserPlaybackVerified": true,
+    "lostChunkAndCompletionResponseRecoveryVerified": true,
+    "duplicatePreservationCancellationAndNonvideoRejectionVerified": true,
+    "desktopAndPhoneLayoutsVerified": true,
+    "taskOwnedFixtureProcessesStoppedAndDataRemoved": true
+  },
+  "firstUse": "Refresh Cinema, unlock an adult owner viewing profile, choose Add videos, connect a full destination path on the Workspace PC, then choose and upload videos. No owner profile, PIN, library or media was created as a functional fixture.",
+  "boundaries": "Feature limits remain in SUPPORT.md. This is workstation and synthetic acceptance, with no new whole-installer, clean-host or physical-reboot certification."
+}
