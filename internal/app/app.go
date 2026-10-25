@@ -14,15 +14,17 @@ import (
 )
 
 type App struct {
-	H        *apphost.Host
-	mu       sync.Mutex
-	engine   *jellyfin.Client
-	secrets  Secrets
-	ready    bool
-	status   string
-	plays    map[string]*Playback
-	attempts map[string]attempt
-	uploadMu sync.Mutex
+	H         *apphost.Host
+	mu        sync.Mutex
+	engine    *jellyfin.Client
+	secrets   Secrets
+	ready     bool
+	status    string
+	plays     map[string]*Playback
+	attempts  map[string]attempt
+	uploadMu  sync.Mutex
+	libraryMu sync.Mutex
+	driveRoot string
 }
 type attempt struct {
 	Count int
@@ -37,6 +39,10 @@ type Secrets struct {
 
 func New(h *apphost.Host) (*App, error) {
 	a := &App{H: h, status: "Starting the private media engine", plays: map[string]*Playback{}, attempts: map[string]attempt{}, secrets: Secrets{Users: map[string]jellyfin.Credentials{}}}
+	a.driveRoot = os.Getenv("MYCINEMA_DRIVE_ROOT")
+	if a.driveRoot == "" && h.Config.Issuer == "" {
+		a.driveRoot = filepath.Join(filepath.Dir(h.Config.Data), "Files")
+	}
 	var schema int
 	if e := h.DB.QueryRow("SELECT coalesce(max(version),0) FROM host_migrations").Scan(&schema); e != nil {
 		return nil, e
@@ -92,6 +98,7 @@ func New(h *apphost.Host) (*App, error) {
 		{"GET /api/items/{id}/similar", a.similar},
 		{"POST /api/playback/sessions", a.startPlayback}, {"POST /api/playback/{id}/progress", a.progress}, {"POST /api/playback/{id}/stop", a.stopPlayback}, {"GET /api/playback/{id}/stream/{path...}", a.stream},
 		{"GET /api/admin/settings", a.settings}, {"POST /api/admin/libraries", a.addLibrary}, {"DELETE /api/admin/libraries/{id}", a.removeLibrary}, {"POST /api/admin/scan", a.scan},
+		{"GET /api/admin/folders", a.folders}, {"PUT /api/admin/libraries/{id}/folder", a.changeLibraryFolder},
 		{"POST /api/admin/uploads", a.createUpload}, {"GET /api/admin/uploads/{id}", a.uploadStatus}, {"PUT /api/admin/uploads/{id}", a.uploadChunk}, {"POST /api/admin/uploads/{id}/complete", a.completeUpload}, {"DELETE /api/admin/uploads/{id}", a.cancelUpload},
 		{"POST /api/profile/preferences", a.preferences}, {"DELETE /api/profile/history", a.clearHistory},
 	}

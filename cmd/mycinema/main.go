@@ -17,7 +17,7 @@ import (
 	"syscall"
 )
 
-var version = "0.1.0-preview.4"
+var version = "0.1.0-preview.5"
 
 func run() error {
 	f := flag.NewFlagSet("cinema", flag.ContinueOnError)

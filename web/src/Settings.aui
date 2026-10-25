@@ -23,12 +23,15 @@ Page Settings variant=settings
             Stack
               Text "$item.name"
               Text variant=muted "$item.kind"
-              Text variant=path "$item.path"
+              Text variant=path "$item.location"
             Spacer
+            Button variant=outline item=$item.id action=changeFolder "Change folder"
             Button icon=Trash2 item=$item.id label="Remove library configuration, keep files" action=removeLibrary
         Input name=libraryName placeholder="Library name"
         Select name=libraryKind label="Library type" options=$libraryKinds
-        Input name=libraryPath placeholder="Full media folder path"
+        Text variant=muted "Movies, TV Shows and Home Videos start in the Cinema folder in My Drive. You can choose another folder below."
+        Button variant=outline action=chooseFolder icon=FolderPlus "Browse My Drive"
+        Text variant=path "$chosenFolder"
         Checkbox name=lookupMetadata label="Look up titles and artwork online using media filenames"
         Row
           Button variant=primary action=addLibrary icon=FolderPlus "Add folder"
@@ -43,10 +46,11 @@ Page Settings variant=settings
         Select name=editProfile label="Profile to edit" options=$profileOptions
         Input name=editName placeholder="Profile display name"
         Select name=editRating label="Maximum content age" options=$ratings
-        Input name=editPin type=password placeholder="New PIN (leave blank to retain)" inputMode=numeric
+        If condition=$pinRequired
+          Input name=editPin type=password placeholder="New PIN (leave blank to retain)" inputMode=numeric
         Input name=blockedTags placeholder="Blocked tags, comma separated"
         Input name=allowedLibraries placeholder="Allowed Jellyfin library IDs, comma separated (empty = all)"
-        Button variant=primary action=editProfile "Save and lock profile"
+        Button variant=primary action=editProfile "$profileSaveLabel"
     Card variant=settings-panel
       Heading level=2 "Backups and updates"
       Text variant=muted "Workspace can pause the media engine and save a complete recovery copy. Your original videos need their own file backup."

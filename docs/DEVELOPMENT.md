@@ -48,3 +48,14 @@ Media authority is rechecked before each manifest, segment, artwork and detail.
 See ADR-001-architecture.md and SECURITY-CHECKS.md for the engine and trust model.
 
 Use the pinned runtime assembly asset from the same My Cinema release. The optional Python assemble-runtime.py records how unmodified official server and encoder archives are combined; ZIP deflate bytes can vary with zlib. The published runtime checksum remains mandatory.
+
+Managed Cinema5 requires Workspace86 and its catalog environment entry
+`MYCINEMA_DRIVE_ROOT=${FILES}`. The existing manager expands this to the real
+My Drive files root; never infer it from private app data. Standalone mode uses
+the adjacent Files directory. Default library markers are stored per media type
+in cinema_settings, preserving owner changes and removals across restarts. The
+folder picker returns only directories beneath that configured root.
+
+Generate release contracts with the Workspace SDK and require schema2/integration3
+for minimumManager. Run scripts/check-release.py against the complete release
+before publishing, including both minimal and full installed catalog checks.

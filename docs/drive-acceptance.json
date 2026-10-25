@@ -1,0 +1,21 @@
+{
+  "version": "0.1.0-preview.5",
+  "checks": [
+    "Exact candidate creates all three Cinema folders in the actual shared Drive files root on native startup",
+    "Actual MyAccounts code/PKCE sign-in creates and selects an adult viewing profile without any PIN",
+    "Changed destination is the same physical folder authenticated My Drive reads, without duplicate media storage",
+    "Normal native stop/restart preserves the owner-selected folder and never resets it to the default",
+    "Independent OneAccount browser session selects the existing single profile without a PIN",
+    "Kids retain restricted viewing and cannot browse owner folders; adult OneAccount profile switching needs no PIN",
+    "Different real MyAccounts subject cannot access the owner household or browse Drive"
+  ],
+  "errors": [],
+  "realOIDC": true,
+  "exactCandidateSHA256": "3c65129c3705a0a73cbf856eee8fa8bf316c3ae0f23bf1c89347d901951f21ed",
+  "syntheticProtectedNTFS": true,
+  "baselineInstaller": "0.3.0-preview.85",
+  "candidateInstalledIntoFreshFixture": true,
+  "wholeCinema5InstallerTest": false,
+  "liveOwnerDataUsed": false,
+  "cleanHost": false
+}

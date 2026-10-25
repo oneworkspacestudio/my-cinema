@@ -9,12 +9,13 @@ folder = Path(sys.argv[1])
 info = json.loads((folder / 'build-info.json').read_text(encoding='utf-8'))
 manifest = json.loads((folder / 'workspace-update.json').read_text(encoding='utf-8'))
 assert manifest['schema'] == 2 and manifest['integration'] == 3, 'Manager requirements need schema2/integration3'
-assert manifest['minimumManager'] == '0.3.0-preview.85'
+assert manifest['minimumManager'] == '0.3.0-preview.86'
 assert manifest['repository'] == 'oneworkspacestudio/my-cinema'
 assert manifest['tag'] == 'v' + info['version']
 assert len(manifest['apps']) == 1
 app = manifest['apps'][0]
 assert app['id'] == 'cinema' and app['version'] == info['version']
+assert app['env'] == {'MYCINEMA_DRIVE_ROOT': '${FILES}'}
 assert app['health'] == '/cinema-health' and app['route'] == '/cinema'
 assert app['source'] == 'https://github.com/' + manifest['repository'] + '/releases/tag/' + manifest['tag']
 for key, package in manifest['packages'].items():

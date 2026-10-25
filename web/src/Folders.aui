@@ -1,0 +1,18 @@
+Card variant=modal label="Choose a My Drive folder" closeAction=closeFolders
+  Heading level=2 "Choose a My Drive folder"
+  Text variant=muted "Browse My Drive, then choose the folder Cinema should use. Files stay where they are."
+  Row
+    Button variant=outline action=folderRoot "My Drive"
+    If condition=$canGoUp
+      Button variant=outline action=folderUp icon=ArrowLeft "Up one folder"
+  Text variant=path "$label"
+  Stack variant=folder-list
+    For each=$folders
+      Button variant=outline item=$item.folder action=openFolder icon=FolderPlus "$item.name"
+  If condition=$empty
+    Text variant=muted "No subfolders here. You can choose this folder."
+  If condition=$truncated
+    Text variant=muted "This folder has many entries. The first group is shown."
+  Row
+    Button variant=primary action=useFolder disabled=$cannotSelect "Use this folder"
+    Button variant=outline action=closeFolders "Cancel"

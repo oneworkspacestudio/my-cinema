@@ -4,15 +4,15 @@ Your movies, series and family profiles in your own private cinema.
 
 Browse a cinematic home screen, save titles to My List, find a film, choose an
 episode and pick up where you left off. Kids get their own rating restrictions
-and viewing history. Adult profiles use a PIN.
+and viewing history. Your OneAccount sign-in is all you need; there is no extra viewing PIN.
 
 ![My Cinema on desktop](docs/screenshots/desktop.png)
 
 Open My Cinema from One Workspace and continue with your OneAccount, provided by
-MyAccounts. Unlock an adult viewing profile and choose **Add videos** in the
-header. Upload videos from your computer or phone, or connect existing Movies,
-TV Shows and Home videos folders. Use the same folders as My Drive to avoid
-copying videos that are already on your Workspace PC.
+MyAccounts. Cinema creates **Cinema/Movies**, **Cinema/TV Shows** and
+**Cinema/Home Videos** in My Drive automatically. Choose **Add videos** to upload
+from your computer or phone. To use another location, choose **Change folder**
+and browse My Drive. Videos already in those folders are indexed in place.
 
 For the portable Windows app, extract the complete release folder and open
 `MyCinema.exe`. Its private media engine is included. You do not need Docker,

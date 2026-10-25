@@ -57,7 +57,13 @@ func TestUploadTransactionAndBoundaries(t *testing.T) {
 	if e != nil {
 		t.Fatal(e)
 	}
-	engine := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(204) }))
+	engine := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "GET" && r.URL.Path == "/Library/VirtualFolders" {
+			apphost.JSON(w, 200, []any{})
+			return
+		}
+		w.WriteHeader(204)
+	}))
 	defer engine.Close()
 	a.engine = jellyfin.New(engine.URL)
 	a.ready = true

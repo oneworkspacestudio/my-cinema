@@ -18,8 +18,11 @@ Page Profiles variant=profiles
         Select name=profileKind label="Profile type" options=$kinds
         Select name=profileRating label="Maximum rating" options=$ratings
         Select name=profileAvatar label="Avatar colour" options=$avatars
-      Input name=profilePin type=password placeholder="Profile PIN" inputMode=numeric maxLength=12
-      Text variant=muted "Adult profiles require a 4–12 digit PIN. Kids cannot open adult profiles without it."
+      If condition=$pinRequired
+        Input name=profilePin type=password placeholder="Profile PIN" inputMode=numeric maxLength=12
+        Text variant=muted "Standalone adult profiles use a 4–12 digit PIN."
+      If condition=$oneAccount
+        Text variant=muted "You are signed in with OneAccount. No viewing PIN is needed."
       Row
         Button variant=primary action=submitProfile "$formAction"
         If condition=$hasProfiles

@@ -2,37 +2,38 @@
 
 ## In One Workspace
 
-Open My Cinema from the app picker. MyAccounts provides your real OneAccount
-sign-in. Create your first adult viewing profile and choose a 4–12 digit PIN.
-Adult profiles always require the PIN when selected. Each household can have six
-profiles. A Kids profile can only be created or changed after unlocking an adult.
+Open My Cinema from the app picker and sign in with OneAccount. There is no
+additional viewing PIN. If you have one viewing profile, Cinema selects it
+automatically; with several profiles, choose who is watching. Create your first
+adult viewing profile if this is a new household. A household can have six
+profiles. Kids profiles keep their content restrictions while selected.
 
-The Workspace owner can choose **Add videos** in the header after unlocking an
-adult viewing profile. First connect a destination folder: give it a name, choose
-Movies, TV Shows or Home videos, and enter its full path on the Workspace PC.
-Select **Create this folder if it does not exist** to create a new folder inside
-an existing parent. Paths refer to the PC running Workspace, including when you
-use Cinema from a phone or another computer.
+Cinema automatically creates **Cinema/Movies**, **Cinema/TV Shows** and
+**Cinema/Home Videos** inside the ordinary files shown by My Drive, then connects
+them as media libraries. Open **Add videos**, choose the destination, select videos
+from your computer or phone and press **Upload selected videos**. No folder path
+or manual library setup is needed.
 
-To upload, choose a connected folder, select videos from your device and press
-**Upload selected videos**. Keep Cinema open until it reports the videos saved.
-The page shows progress and provides Cancel upload. Videos transfer in small
-chunks with acknowledged offsets, allowing a lost request to be retried. Each
-completed video is saved in its own title folder. Existing files/folders are
-never overwritten; rename a duplicate upload instead. Cancelling removes only
-the unfinished upload and keeps videos already completed. Interrupted staging
-files stay hidden from playback and expire after 24 hours when their library is
-available. Uploads support MP4, MKV, WebM, MOV, AVI, M4V and TS, up to 100 GB each.
+In Add videos or Settings, choose **Change folder** next to a library to browse
+My Drive. Open folders, use **Up one folder** or **My Drive** to navigate, then
+press **Use this folder**. The choice survives restarts. It changes the library's
+location without moving or deleting videos from the previous folder. You can also
+browse and connect another existing Drive folder. Links/junctions and private app
+data cannot be selected. An active upload must finish or be cancelled before its
+destination can change.
 
-For videos already on this PC or in My Drive, connect the same real directories
-that My Drive exposes. Connecting a folder only indexes it; no copying or moving
-is performed. TV libraries should use Series / Season / Episode structure; connect
-an existing structured folder for a complete series. Uploaded originals on your
-device are retained, and originals saved on the Workspace PC need a file backup.
-Directories cannot traverse links or junctions or point into Cinema's private data.
+Keep Cinema open until an upload reports the videos saved. It shows progress and
+provides Cancel upload. A lost request can be retried using acknowledged offsets.
+Each completed video is saved in its own title folder. Existing files/folders are
+never overwritten; rename duplicate uploads instead. Cancelling removes only the
+unfinished upload and keeps completed videos. Interrupted staging stays hidden
+from playback and expires after 24 hours when the library is available. Supported
+uploads: MP4, MKV, WebM, MOV, AVI, M4V and TS, up to 100 GB each.
 
-For example: D:\Media\Movies and D:\Media\TV Shows. UNC shares require the current
-Windows account to already have read access. Paths appear only in owner settings.
+You can also copy videos into these folders using My Drive. Cinema indexes them
+in place. For TV shows, keep the Series / Season / Episode structure. Original
+videos on your device stay untouched. Videos saved on the Workspace PC need their
+own file backup.
 
 Jellyfin reads ordinary media folders and local NFO metadata. Internet metadata and
 artwork lookup is an explicit library option; enabling it can send media filenames
@@ -56,7 +57,9 @@ the adjacent `data` directory; a private pinned engine is extracted there. Initi
 database migration can take longer than subsequent launches. No Docker, Node,
 installer service, global database or system PATH change is required.
 
-Standalone mode uses an explicitly labelled local owner account. It does not
+Standalone mode uses an explicitly labelled local owner account. Its adult viewing
+profiles retain the local PIN; OneAccount profiles never require that extra PIN.
+The default media folders are in the adjacent Files/Cinema directory. It does not
 pretend to be OneAccount. For managed real OIDC, use One Workspace; developer
 configuration is described in DEVELOPMENT.md. There is no external sharing by
 default. LAN/remote access uses an explicitly configured HTTPS Workspace proxy.

@@ -1,7 +1,8 @@
 {
-  "version": "0.1.0-preview.4",
+  "version": "0.1.0-preview.5",
   "checks": [
-    "Visible Add videos entry and real new destination folder creation",
+    "Cinema creates and registers Movies, TV Shows and Home Videos in the shared Drive root automatically",
+    "Drive folder browser navigates nested folders, works on phone and saves a changed destination without path entry",
     "Chunked browser upload recovers lost chunk and completion replies and saves exact original bytes",
     "Uploaded video is indexed by real Jellyfin and actually plays in the browser; phone layout fits",
     "Duplicate upload reports a conflict and leaves existing video bytes unchanged",

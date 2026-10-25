@@ -222,6 +222,11 @@ func (a *App) engineCycle(ctx context.Context) error {
 			a.engineStatus(false, "The media connection could not be unlocked. Restore the matching data and bridge backup.")
 			break
 		}
+		if e = a.ensureDefaultLibraries(ctx); e != nil {
+			a.H.Log.Error("default Cinema folders unavailable", "kind", e.Error())
+			a.engineStatus(false, "Cinema could not connect its folders in My Drive. Reconnect the Drive disk and restart Cinema.")
+			break
+		}
 		ready = true
 		a.engineStatus(true, "Your private media engine is ready")
 		break
@@ -279,10 +284,11 @@ func validateRoot(path string) (string, error) {
 }
 
 type Library struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-	Kind string `json:"kind"`
-	Path string `json:"path"`
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Kind     string `json:"kind"`
+	Path     string `json:"path"`
+	Location string `json:"location"`
 }
 
 func (a *App) libraries() ([]Library, error) {
@@ -311,6 +317,7 @@ func (a *App) settings(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	for i := range ls {
+		ls[i].Location = a.folderLabel(ls[i].Path)
 		if _, e = validateRoot(ls[i].Path); e != nil {
 			ls[i].Kind += " (unavailable)"
 		}
@@ -324,14 +331,25 @@ func (a *App) addLibrary(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var in struct {
-		Name, Kind, Path string
-		Metadata         bool
-		Create           bool
+		Name, Kind, Path, Folder string
+		Metadata                 bool
+		Create                   bool
 	}
 	if !apphost.Decode(w, r, &in) {
 		return
 	}
 	in.Name = strings.TrimSpace(in.Name)
+	if in.Folder != "" {
+		var e error
+		in.Path, e = a.driveFolder(in.Folder)
+		if e != nil {
+			apphost.Problem(w, 400, e.Error())
+			return
+		}
+		in.Create = false
+	}
+	a.libraryMu.Lock()
+	defer a.libraryMu.Unlock()
 	if len(in.Name) < 1 || len(in.Name) > 80 || (in.Kind != "movies" && in.Kind != "tvshows" && in.Kind != "homevideos") {
 		apphost.Problem(w, 400, "Choose a library name and type")
 		return
@@ -369,15 +387,9 @@ func (a *App) addLibrary(w http.ResponseWriter, r *http.Request) {
 		apphost.Problem(w, 409, "That folder or library name is already registered")
 		return
 	}
-	e = a.engine.Do(r.Context(), "POST", "/Library/VirtualFolders?name="+urlQuery(in.Name)+"&collectionType="+in.Kind+"&refreshLibrary=true", a.secrets.Admin.Token, map[string]any{"LibraryOptions": map[string]any{"PathInfos": []map[string]string{{"Path": path}}, "EnableRealtimeMonitor": true, "EnableAutomaticSeriesGrouping": true, "EnableInternetProviders": in.Metadata}}, nil)
+	id, e := a.connectLibrary(r.Context(), in.Name, in.Kind, path, in.Metadata)
 	if e != nil {
 		a.fail(w, e)
-		return
-	}
-	id := apphost.ID()
-	_, e = a.H.DB.Exec("INSERT INTO libraries VALUES(?,?,?,?)", id, in.Name, in.Kind, path)
-	if e != nil {
-		a.H.DBError(w, e)
 		return
 	}
 	a.H.Audit(apphost.Current(r).User.ID, "library-added", id)
@@ -387,6 +399,8 @@ func (a *App) removeLibrary(w http.ResponseWriter, r *http.Request) {
 	if !a.admin(w, r) || !a.media(w) {
 		return
 	}
+	a.libraryMu.Lock()
+	defer a.libraryMu.Unlock()
 	a.uploadMu.Lock()
 	defer a.uploadMu.Unlock()
 	a.expireUploadsLocked()

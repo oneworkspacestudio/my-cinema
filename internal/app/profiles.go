@@ -35,6 +35,12 @@ func sessionKey(r *http.Request) string {
 	return apphost.Hash(c.Value)
 }
 func urlQuery(s string) string { return url.QueryEscape(s) }
+
+// Only a server-validated session from this installation's configured issuer
+// replaces the local viewing PIN. Request bodies/headers cannot opt into it.
+func (a *App) oneAccount(r *http.Request) bool {
+	return a.H.Config.Issuer != "" && apphost.Current(r).User.Issuer == a.H.Config.Issuer
+}
 func (a *App) profile(id, owner string) (p Profile, e error) {
 	var prefs string
 	e = a.H.DB.QueryRow("SELECT id,owner,name,kind,pin,rating,avatar,prefs FROM profiles WHERE id=? AND owner=?", id, owner).Scan(&p.ID, &p.owner, &p.Name, &p.Kind, &p.pin, &p.Rating, &p.Avatar, &prefs)
@@ -59,6 +65,9 @@ func (a *App) profiles(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		p.Prefs = json.RawMessage(prefs)
+		if a.oneAccount(r) {
+			p.Protected = false
+		}
 		out = append(out, p)
 	}
 	e = rows.Err()
@@ -69,7 +78,7 @@ func (a *App) profiles(w http.ResponseWriter, r *http.Request) {
 	}
 	var selected string
 	_ = a.H.DB.QueryRow("SELECT profile FROM active_profiles WHERE session=?", sessionKey(r)).Scan(&selected)
-	apphost.JSON(w, 200, map[string]any{"profiles": out, "active": selected, "maximum": 6})
+	apphost.JSON(w, 200, map[string]any{"profiles": out, "active": selected, "maximum": 6, "pinRequired": !a.oneAccount(r)})
 }
 func (a *App) active(w http.ResponseWriter, r *http.Request) (Profile, bool) {
 	var id, expiry string
@@ -82,13 +91,16 @@ func (a *App) active(w http.ResponseWriter, r *http.Request) (Profile, bool) {
 		apphost.Problem(w, 403, "This profile is no longer available")
 		return p, false
 	}
+	if a.oneAccount(r) {
+		p.Protected = false
+	}
 	w.Header().Set("X-Cinema-Profile", p.ID)
 	if expected := r.Header.Get("X-Cinema-Profile"); expected != "" && expected != p.ID {
 		apphost.Problem(w, 409, "The viewing profile changed. Choose who is watching again.")
 		return p, false
 	}
 	// Adult PIN unlocks are bounded; selecting a child immediately revokes them.
-	if p.Kind == "adult" {
+	if p.Kind == "adult" && !a.oneAccount(r) {
 		until, e := time.Parse(time.RFC3339Nano, expiry)
 		if e != nil || time.Now().After(until) {
 			_, _ = a.H.DB.Exec("DELETE FROM active_profiles WHERE session=?", sessionKey(r))
@@ -160,10 +172,10 @@ func (a *App) createProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if count == 0 && in.Kind != "adult" {
-		apphost.Problem(w, 400, "Create an adult profile with a PIN first")
+		apphost.Problem(w, 400, "Create an adult profile first")
 		return
 	}
-	if in.Kind == "adult" && !validPIN.MatchString(in.PIN) {
+	if !a.oneAccount(r) && in.Kind == "adult" && !validPIN.MatchString(in.PIN) {
 		apphost.Problem(w, 400, "Protect adult profiles with a 4–12 digit PIN")
 		return
 	}
@@ -176,6 +188,9 @@ func (a *App) createProfile(w http.ResponseWriter, r *http.Request) {
 	}
 	var pin []byte
 	var e error
+	if a.oneAccount(r) {
+		in.PIN = ""
+	}
 	if in.PIN != "" {
 		if !validPIN.MatchString(in.PIN) {
 			apphost.Problem(w, 400, "Use a 4–12 digit PIN")
@@ -260,10 +275,14 @@ func (a *App) selectProfile(w http.ResponseWriter, r *http.Request) {
 		apphost.Problem(w, 404, "Profile not found")
 		return
 	}
+	if a.oneAccount(r) {
+		p.pin = nil
+		p.Protected = false
+	}
 	key := p.owner + ":" + p.ID
 	a.mu.Lock()
 	att := a.attempts[key]
-	if att.Count >= 5 && time.Now().Before(att.Until) {
+	if !a.oneAccount(r) && att.Count >= 5 && time.Now().Before(att.Until) {
 		a.mu.Unlock()
 		apphost.Problem(w, 429, "Too many PIN attempts. Try again in five minutes.")
 		return
@@ -345,7 +364,7 @@ func (a *App) editProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	pin := p.pin
-	if in.PIN != "" {
+	if in.PIN != "" && !a.oneAccount(r) {
 		if !validPIN.MatchString(in.PIN) {
 			apphost.Problem(w, 400, "Use a 4–12 digit PIN")
 			return

@@ -35,6 +35,8 @@ Page Cinema
     Section id=addVideos
   If condition=$detail
     Section id=detail
+  If condition=$folderBrowser
+    Section id=folders
   If condition=$player
     Section id=player
   Row variant=footer

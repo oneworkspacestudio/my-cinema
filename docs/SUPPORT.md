@@ -7,15 +7,15 @@ core and responsive UI, with the following explicit boundaries.
 |---|---|
 | Original embedded React streaming UI, cinematic hero, rails, details, catalogs | Implemented |
 | Real OneAccount/MyAccounts discovery, code + PKCE, nonce/state, subject mapping | Managed integration; acceptance receipt records the exact tested build |
-| Separate restricted Jellyfin identities, PIN adult profiles, child unknown-rating deny | Implemented; native restricted metadata/search/stream checks |
+| Separate restricted Jellyfin identities, child unknown-rating deny | Implemented; OneAccount profiles need no extra PIN; local standalone adults retain PINs |
 | Household authorization | First household creation requires the Workspace owner; no arbitrary member may self-grant library access |
 | Per-profile favourites, progress, resume, watched flags | Implemented; real engine writeback |
 | Movies, seasons, episodes, next episode | Implemented; specials stay explicitly selectable in the season list |
 | Native MP4/WebM and Jellyfin remux/HLS selection | Implemented; H.264/AAC MP4 and MKV transcode acceptance |
 | Audio/subtitle/version selection and WebVTT conversion | Implemented; representative acceptance only, not every codec/device |
 | Keyboard, touch, TV spatial focus, reduced motion | Implemented; desktop/tablet/phone/TV browser layouts checked |
-| My Drive shared filesystem roots, stable polling, scans, non-destructive removal | Implemented; originals are indexed in place |
-| Add videos, chunked browser uploads, progress/cancel, new destination folder | Delivered in preview.4; unlocked adult owner only, 100 GB per video, duplicate protection, Windows atomic publication |
+| My Drive shared filesystem roots, stable polling, scans, non-destructive removal | Implemented; automatic Cinema/Movies, Cinema/TV Shows and Cinema/Home Videos; folder browser and saved destination changes |
+| Add videos, chunked browser uploads, progress/cancel | Adult owner only, ready-to-use Drive folders, 100 GB per video, duplicate protection, Windows atomic publication |
 | Genre similarity suggestions, truthful date-added view | Implemented; no fabricated popularity figures |
 | Internet metadata lookup | Explicit library option; local NFO works without it |
 | Managed verified updates and complete stop/checkpoint backup/restore | Existing Workspace workflow, linked from Settings |
