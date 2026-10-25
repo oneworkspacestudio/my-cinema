@@ -68,3 +68,59 @@ on both PCs, independent final hashes/readiness/default-folder audits, preserve
 all other apps and latest rollback, clean named fixtures and push final handoffs.
 Never repeat an active update. Runtime pin unchanged: Jellyfin12.3/FFmpeg8.1.2-1,
 archive5de2eb4e17fe77132c3f681fcc80cd63846f9ce78d8e7b75d7f9ed7e292b16b3.
+
+## Publication and active delivery checkpoint
+
+Immutable5 published with all16 asset sizes/digests verified. Exact SDK-generated
+manifest matched; both4/10-package layout checks passed with Drive Env and other
+apps preserved. Channel promoted7cf6454, only my-cinema records changed; public
+unauthenticated index/small-asset hashes and all withholdings verified. All named
+synthetic NTFS data and processes now removed/stopped; original synthetic clip
+and reports remain in task tooling. No private source/recovery was removed.
+
+Both actual Cinema-only transactions are running; do NOT repeat them. Primary
+uses normal verified offline SDK flow from an assembly of public86 + exact public5
+payloads, whose selected catalog exactly matched the public app-only plan before
+mutation. Assembly SHA e852855e34ee3ced94b29cdba098fbc0b906c78ff53e1263ebd346a85d7e9552,
+all166 member hashes/sizes verified. This avoids keeping the release ZIP on C;
+normal backup/startup/rollback guards are intact. Primary startup passed and its
+retained recovery copy is being checked. Remote normal public Updates selected
+only Cinema5 (Social7 unchecked); its actual controller reports advancing backup
+bytes for about6.3GiB, no error. Its before config is86/Cinema4. Final actual
+receipts, remote UI/hash/readiness/folder audit and final handoff pushes remain.
+
+Primary is now complete: drive5-primary-delivery.json verifies exact3c65129c...
+f21ed, manager86 bytes unchanged, actual media readiness/Jellyfin12.3, all three
+Drive directories and registered defaults, prior library rows,25 other app EXE
+hashes/contracts/packages, owner/paths/ports/preferences/OIDC/recovery retained.
+Newest verified rollback kept; unknown older cleanup item preserved. Do not
+repeat the primary update. Remote transaction and final remote audit remain.
+
+## Both installations complete
+
+Remote normal public Cinema-only transaction completed in20m22s, all apps healthy,
+latest verified86/Cinema4 recovery retained. Independent read-only remote audit
+passed exact public5/manager86 hashes,25 other executable hashes/contracts/package
+pins, owner/paths/ports/preferences/app count, actual Cinema/Jellyfin readiness,
+Drive Env, all default directories and the minimal four-package scope. Its86
+controller's fresh public check reports Cinema5 and Workspace86 up to date;
+Social6 and unrelated My3D review remain unchanged.
+
+The deployed5 interface was reloaded using the existing OneAccount session. Its
+existing adult profile opened without a PIN or any credential entry. Add videos
+shows all three registered default libraries; Change folder browses My Drive and
+Cinema's three directories. Only read-only UI inspection/navigation: no live test
+profile, PIN, upload, playback or destination change. Original user Settings form
+was left untouched. Completed updater/task terminal closed, temporary remote
+input setting restored; existing services left running. New Add videos tab kept.
+
+Sanitized aggregate docs/drive-delivery.json records both audits; actual deployed
+UI/audit/completion evidence remains in task tooling remote5-* files. Both hashes
+match3c65129c...f21ed, manager86 unchanged. Source/release/promotion/installation
+and fixture cleanup complete; no update or test process remains running. Final
+docs-only handoff pushes do not move immutable5 tags/assets. No required work
+remains. Preserve originals, source/evidence and newest verified owner recovery.
+
+Packaging tooling uses legacy Windows Python: run with -X utf8 and write UTF-8
+explicitly. An initial local script encoding error was fixed before publication;
+published tags/assets were never replaced.
